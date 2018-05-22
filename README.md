@@ -1,2 +1,2 @@
 # ProjetoPLP
-Projeto de PLP 2018.1
+Jogo Show do Milhão (Projeto de PLP 2018.1)
