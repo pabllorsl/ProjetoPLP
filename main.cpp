@@ -3,64 +3,163 @@
 
 using namespace std;
 
-vector<string> faceis;
 string nome;
-int valor = 0;
+vector<string> faceis;
+vector<string> questao;
+vector<int> premios;
+string resposta;
+bool acertou;
+int premioAtual = 0;
 
-void iniciaJogo();
+void iniciarJogo();
 
 void preencherPerguntasFaceis();
 
 int perguntaAleatoria(const vector<string> &vector);
 
-void paraJogo();
+void pararJogo();
 
-void perdeJogo();
+void perderJogo();
 
-void ganhaJogo();
+void ganharJogo();
+
+void iniciarJogo();
+
+void preencherPremios();
+
+void imprimirPremios();
+
+void preencherQuestao();
+
+void imprimirQuestao();
+
+string escolherAlternativa();
+
+bool alternativaCorreta();
+
+void imprimirResultado();
+
+void pararJogo();
+
+void perderJogo();
+
+void atualizarPremio();
 
 int main() {
-    iniciaJogo();
-    cout << "Seu nome eh: " << nome << endl;
-    cout << "Você tem: R$" << valor << endl;
+    iniciarJogo();
 
-    preencherPerguntasFaceis();
-    cout << faceis.at(perguntaAleatoria(faceis)) << endl;
-
-    paraJogo();
-    perdeJogo();
-    ganhaJogo();
+    /*preencherPerguntasFaceis();
+    cout << faceis.at(perguntaAleatoria(faceis)) << endl;*/
 
     return 0;
 }
 
-void iniciaJogo() {
+void iniciarJogo() {
     cout << "Bem vindo(a) ao SHOW DO MILHÃO!" << endl << endl;
-    cout << "Você responderá à perguntas do nível fácil ao nível díficil." << endl;
+    cout << "Você responderá à perguntas do nível fácil, médio e díficil." << endl;
     cout << "Teste seus conhecimentos e concorra ao prêmio máximo de R$ 1 milhão." << endl << endl;
     cout << "Vamos começar. Diga-me o seu nome: ";
     cin >> nome;
+
+    preencherPremios();
+    preencherQuestao();
+//    imprimirPremios();
+    imprimirQuestao();
+    escolherAlternativa();
+    imprimirResultado();
 }
 
-void preencherPerguntasFaceis() {
+void preencherPremios() {
+    premios.push_back(1000);
+    premios.push_back(premios.at(0) * 10);
+    premios.push_back(premios.at(1) * 5);
+    premios.push_back(premios.at(2) * 2);
+    premios.push_back(premios.at(3) * 5);
+    premios.push_back(premios.at(4) * 2);
+}
+
+void imprimirPremios() {
+    for (int i = 0; i < premios.size(); ++i) {
+        cout << premios.at(i) << endl;
+    }
+}
+
+void preencherQuestao() {
+    questao.push_back("Quanto sao 2+2?");
+    questao.push_back("A) 5");
+    questao.push_back("B) 7");
+    questao.push_back("C) 4");
+    questao.push_back("D) 2");
+    questao.push_back("C");
+    questao.push_back("c");
+}
+
+void imprimirQuestao() {
+    cout << "\nPergunta valendo: R$" << premios.at(premioAtual) << endl;
+    for (int i = 0; i < questao.size() - 2; ++i) {
+        cout << questao.at(i) << endl;
+    }
+}
+
+string escolherAlternativa() {
+    cout << "\nEscolha uma alternativa:" << endl;
+    cin >> resposta;
+    return resposta;
+}
+
+bool alternativaCorreta() {
+    if (questao.at(5).compare(resposta) == 0 || questao.at(6).compare(resposta) == 0) {
+        acertou = true;
+        return true;
+    } else {
+        acertou = false;
+        return false;
+    }
+}
+
+void imprimirResultado() {
+    cout << "Sua resposta foi: " << resposta << endl;
+    if (alternativaCorreta()) {
+        cout << "Parabens " << nome << ", voce acertou!" << endl;
+        cout << "Você tem: R$" << premios.at(premioAtual) << endl;
+    } else {
+        perderJogo();
+    }
+}
+
+void pararJogo() {
+    cout << nome << ", você decidiu parar o jogo e vai pra casa com R$" << premios.at(premioAtual) << "." << endl;
+}
+
+void perderJogo() {
+    if (premioAtual == 0) {
+        cout << "Infelizmente " << nome << ", voce errou e perdeu tudo." << endl;
+        cout << "Boa sorte na proxima vez." << endl;
+    }
+
+}
+
+void ganharJogo() {
+    cout << "PARABÉNS " << nome << "! Você ganhou R$ 1 milhão!!!" << endl;
+}
+
+void atualizarPremio() {
+    if (acertou) {
+        premioAtual += 1;
+    }
+}
+
+/*Faceis: 1mil, 10mil
+Medias: 50mil, 100 mil
+Dificeis: 500 mil, 1milhao*/
+
+/*void preencherPerguntasFaceis() {
     faceis.push_back("Quem eh o presidente do Brasil?");
     faceis.push_back("Quem sou eu?");
     faceis.push_back("O que é binário?");
-}
+}*/
 
 int perguntaAleatoria(const vector <string> &vector) {
     srand(time(nullptr));
     return rand() % vector.size();
-}
-
-void paraJogo() {
-    cout << nome << ", você decidiu parar o jogo e vai pra casa com R$" << valor << "." << endl;
-}
-
-void perdeJogo() {
-    cout << nome << ", infelizmente você errou a resposta e vai pra casa com R$" << valor << endl;
-}
-
-void ganhaJogo() {
-    cout << "PARABÉNS " << nome << "! Você ganhou R$ 1 milhão!!!" << endl;
 }
