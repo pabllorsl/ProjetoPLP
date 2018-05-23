@@ -1,15 +1,23 @@
+#include <ctime>
 #include <iostream>
+#include <string>
 #include <vector>
 
 using namespace std;
 
-string nome;
 vector<string> faceis;
 vector<string> questao;
 vector<int> premios;
+
+string nome;
 string resposta;
 bool acertou;
 int premioAtual = 0;
+
+int pulos = 3;
+int cartas = 1;
+int universitarios = 1;
+int placas = 1;
 
 void iniciarJogo();
 
