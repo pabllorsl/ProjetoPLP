@@ -55,10 +55,10 @@ int main() {
 }
 
 void iniciarJogo() {
-    cout << "Bem vindo(a) ao SHOW DO MILHÃO!" << endl << endl;
-    cout << "Você responderá à perguntas do nível fácil, médio e díficil." << endl;
-    cout << "Teste seus conhecimentos e concorra ao prêmio máximo de R$ 1 milhão." << endl << endl;
-    cout << "Vamos começar. Diga-me o seu nome: ";
+    cout << "Bem vindo(a) ao SHOW DO MILHAO!" << endl << endl;
+    cout << "Voce respondera a perguntas do nivel facil, medio e dificil." << endl;
+    cout << "Teste seus conhecimentos e concorra ao premio maximo de R$ 1 milhao." << endl << endl;
+    cout << "Vamos comecar. Diga-me o seu nome: ";
     cin >> nome;
 
     preencherPremios();
@@ -121,14 +121,14 @@ void imprimirResultado() {
     cout << "Sua resposta foi: " << resposta << endl;
     if (alternativaCorreta()) {
         cout << "Parabens " << nome << ", voce acertou!" << endl;
-        cout << "Você tem: R$" << premios.at(premioAtual) << endl;
+        cout << "Voce tem: R$" << premios.at(premioAtual) << endl;
     } else {
         perderJogo();
     }
 }
 
 void pararJogo() {
-    cout << nome << ", você decidiu parar o jogo e vai pra casa com R$" << premios.at(premioAtual) << "." << endl;
+    cout << nome << ", voce decidiu parar o jogo e vai pra casa com R$" << premios.at(premioAtual) << "." << endl;
 }
 
 void perderJogo() {
@@ -140,7 +140,7 @@ void perderJogo() {
 }
 
 void ganharJogo() {
-    cout << "PARABÉNS " << nome << "! Você ganhou R$ 1 milhão!!!" << endl;
+    cout << "PARABENS " << nome << "! Voce ganhou R$ 1 milhao!!!" << endl;
 }
 
 void atualizarPremio() {
@@ -156,7 +156,7 @@ Dificeis: 500 mil, 1milhao*/
 /*void preencherPerguntasFaceis() {
     faceis.push_back("Quem eh o presidente do Brasil?");
     faceis.push_back("Quem sou eu?");
-    faceis.push_back("O que é binário?");
+    faceis.push_back("O que eh binario?");
 }*/
 
 int perguntaAleatoria(const vector <string> &vector) {
