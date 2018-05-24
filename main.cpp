@@ -18,7 +18,7 @@ vector<int> parar;
 vector<int> errar;
 
 char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
-vector<string> opcoes = {"Pular", "Cartas", "Universitario", "Placa", "Parar"};
+vector<string> opcoes = {"1) Pular", "2) Cartas", "3) Universitario", "4) Placas", "5) Parar"};
 
 string nome;
 string resposta;
@@ -59,6 +59,8 @@ void perderJogo();
 
 void preencherPremios();
 
+void imprimirOpcoes();
+
 void preencherQuestoesFaceisCG();
 
 void titulo();
@@ -98,8 +100,23 @@ void iniciarJogo() {
     limparTela();
     titulo();
     imprimirQuestao();
+    imprimirOpcoes();
     escolherAlternativa();
     imprimirResultado();
+}
+
+void imprimirOpcoes() {
+
+    cout << "\n" << endl;
+    int opcao;
+    for (int i = 0; i < opcoes.size(); ++i) {
+        if(opcoes.at(i).compare("1) Pular") == 0) {
+            opcao = 3;
+        } else {
+            opcao = 1;
+        }
+        cout << opcoes.at(i) << " " << opcao << endl;
+    }
 }
 
 void preencherPremios() {
@@ -164,7 +181,7 @@ void preencherQuestoesFaceisCG() {
     vetor3.push_back("A) Casa");
     vetor3.push_back("B) Cavalo");
     vetor3.push_back("C) Elefante");
-    vetor3.push_back("D) Hipopótamo");
+    vetor3.push_back("D) Hipopotamo");
     vetor3.push_back("B");
     vetor3.push_back("b");
 
@@ -190,6 +207,23 @@ string escolherAlternativa() {
         cin >> resposta;
     }
 
+    if (resposta.compare("5") == 0) {
+        pararJogo();
+
+    } else if (resposta.compare("1") == 0 && pulos > 0) {
+        pulos--;
+
+    } else if (resposta.compare("2") == 0 && cartas > 0) {
+        cartas--;
+
+    } else if (resposta.compare("3") == 0 && universitarios > 0) {
+        universitarios--;
+
+    } else if (resposta.compare("4") == 0 && placas > 0) {
+        placas--;
+
+    }
+
     return resposta;
 }
 
@@ -198,21 +232,9 @@ bool alternativaCorreta() {
         questoesFaceisCG.at(indiceAleatorio).at(6).compare(resposta) == 0) {
         premioAtual += 1;
         return true;
-    } else {
-        return false;
     }
 
-    /*if (resposta.compare("5") == 0) {
-        pararJogo();
-    } else {
-        if (questoesFaceisCG.at(indiceAleatorio).at(5).compare(resposta) == 0 ||
-            questoesFaceisCG.at(indiceAleatorio).at(6).compare(resposta) == 0) {
-            premioAtual += 1;
-            return true;
-        } else {
-            return false;
-        }
-    }*/
+    return false;
 }
 
 void imprimirResultado() {
@@ -222,6 +244,7 @@ void imprimirResultado() {
         cout << "Sua resposta foi: " << resposta << endl;
     } else if (resposta.compare("1") == 0 || resposta.compare("2") == 0 || resposta.compare("3") == 0 ||
                resposta.compare("4") == 0 || resposta.compare("5") == 0) {
+
         cout << "Voce escolheu a opcao: " << resposta << stoi(resposta) << endl;
     }
 
