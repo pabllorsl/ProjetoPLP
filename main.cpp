@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cstdlib>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,6 +12,7 @@ vector<string> questaoFacilUmCG;
 vector<string> questaoFacilDoisCG;
 vector<string> questaoFacilTresCG;
 vector<int> premios;
+char alternativas[5] = { 'a', 'b', 'c', 'd', '\0' };
 
 string nome;
 string resposta;
@@ -25,6 +28,8 @@ int placas = 1;
 void iniciarJogo();
 
 int perguntaAleatoria(vector<vector<string>> &vector);
+
+char letraAleatoria(char alt[]);
 
 void pararJogo();
 
@@ -74,8 +79,7 @@ void iniciarJogo() {
     preencherQuestaoFacilUmCG();
     preencherQuestaoFacilDoisCG();
     preencherQuestaoFacilTresCG();
-
-//    imprimirPremios();
+    // imprimirPremios();
     imprimirQuestao();
     escolherAlternativa();
     imprimirResultado();
@@ -141,8 +145,15 @@ void imprimirQuestao() {
 }
 
 string escolherAlternativa() {
+    string nome_bot = nome;
+    transform(nome_bot.begin(), nome_bot.end(), nome_bot.begin(), ::tolower);
     cout << "\nEscolha uma alternativa:" << endl;
-    cin >> resposta;
+    if(nome_bot.compare("bot") == 0) {
+        resposta = letraAleatoria(alternativas);
+    } else {
+        cin >> resposta;
+    }
+
     return resposta;
 }
 
@@ -197,4 +208,10 @@ Dificeis: 500 mil, 1milhao*/
 int perguntaAleatoria(vector<vector<string>> &vector) {
     srand(time(nullptr));
     return rand() % vector.size();
+}
+
+// Essa funcao eh usada para o bot
+char letraAleatoria(char alt[]) {
+    int randomIndex = rand() % 4;
+    return alt[randomIndex];
 }
