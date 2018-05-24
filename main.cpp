@@ -1,18 +1,15 @@
+#include <algorithm>
+#include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cstdlib>
-#include <algorithm>
 
 using namespace std;
 
 vector<vector<string>> questoesFaceisCG;
-vector<string> questaoFacilUmCG;
-vector<string> questaoFacilDoisCG;
-vector<string> questaoFacilTresCG;
 vector<int> premios;
-char alternativas[5] = { 'a', 'b', 'c', 'd', '\0' };
+char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
 
 string nome;
 string resposta;
@@ -43,11 +40,7 @@ void preencherPremios();
 
 void imprimirPremios();
 
-void preencherQuestaoFacilUmCG();
-
-void preencherQuestaoFacilDoisCG();
-
-void preencherQuestaoFacilTresCG();
+void preencherQuestoesFaceisCG();
 
 void imprimirQuestao();
 
@@ -76,9 +69,7 @@ void iniciarJogo() {
     cin >> nome;
 
     preencherPremios();
-    preencherQuestaoFacilUmCG();
-    preencherQuestaoFacilDoisCG();
-    preencherQuestaoFacilTresCG();
+    preencherQuestoesFaceisCG();
     // imprimirPremios();
     imprimirQuestao();
     escolherAlternativa();
@@ -100,40 +91,42 @@ void imprimirPremios() {
     }
 }
 
-void preencherQuestaoFacilUmCG() {
-    questaoFacilUmCG.push_back("Quanto sao 2+2?");
-    questaoFacilUmCG.push_back("A) 5");
-    questaoFacilUmCG.push_back("B) 7");
-    questaoFacilUmCG.push_back("C) 4");
-    questaoFacilUmCG.push_back("D) 2");
-    questaoFacilUmCG.push_back("C");
-    questaoFacilUmCG.push_back("c");
+void preencherQuestoesFaceisCG() {
+    vector<string> vetor1;
 
-    questoesFaceisCG.push_back(questaoFacilUmCG);
-}
+    vetor1.push_back("Quanto sao 2+2?");
+    vetor1.push_back("A) 5");
+    vetor1.push_back("B) 7");
+    vetor1.push_back("C) 4");
+    vetor1.push_back("D) 2");
+    vetor1.push_back("C");
+    vetor1.push_back("c");
 
-void preencherQuestaoFacilDoisCG() {
-    questaoFacilDoisCG.push_back("O que esta escrito na bandeira do Brasil?");
-    questaoFacilDoisCG.push_back("A) Ordem e Regresso");
-    questaoFacilDoisCG.push_back("B) Ordem e Retrocesso");
-    questaoFacilDoisCG.push_back("C) Ordem e Progresso");
-    questaoFacilDoisCG.push_back("D) Progresso e Ordem");
-    questaoFacilDoisCG.push_back("C");
-    questaoFacilDoisCG.push_back("c");
+    questoesFaceisCG.push_back(vetor1);
 
-    questoesFaceisCG.push_back(questaoFacilDoisCG);
-}
+    vector<string> vetor2;
 
-void preencherQuestaoFacilTresCG() {
-    questaoFacilTresCG.push_back("Qual o significado da palavra inglesa 'horse'?");
-    questaoFacilTresCG.push_back("A) Casa");
-    questaoFacilTresCG.push_back("B) Cavalo");
-    questaoFacilTresCG.push_back("C) Elefante");
-    questaoFacilTresCG.push_back("D) Hipopótamo");
-    questaoFacilTresCG.push_back("B");
-    questaoFacilTresCG.push_back("b");
+    vetor2.push_back("O que esta escrito na bandeira do Brasil?");
+    vetor2.push_back("A) Ordem e Regresso");
+    vetor2.push_back("B) Ordem e Retrocesso");
+    vetor2.push_back("C) Ordem e Progresso");
+    vetor2.push_back("D) Progresso e Ordem");
+    vetor2.push_back("C");
+    vetor2.push_back("c");
 
-    questoesFaceisCG.push_back(questaoFacilTresCG);
+    questoesFaceisCG.push_back(vetor2);
+
+    vector<string> vetor3;
+
+    vetor3.push_back("Qual o significado da palavra inglesa 'horse'?");
+    vetor3.push_back("A) Casa");
+    vetor3.push_back("B) Cavalo");
+    vetor3.push_back("C) Elefante");
+    vetor3.push_back("D) Hipopótamo");
+    vetor3.push_back("B");
+    vetor3.push_back("b");
+
+    questoesFaceisCG.push_back(vetor3);
 }
 
 void imprimirQuestao() {
@@ -148,7 +141,7 @@ string escolherAlternativa() {
     string nome_bot = nome;
     transform(nome_bot.begin(), nome_bot.end(), nome_bot.begin(), ::tolower);
     cout << "\nEscolha uma alternativa:" << endl;
-    if(nome_bot.compare("bot") == 0) {
+    if (nome_bot.compare("bot") == 0) {
         resposta = letraAleatoria(alternativas);
     } else {
         cin >> resposta;
