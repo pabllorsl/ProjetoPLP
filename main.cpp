@@ -7,89 +7,131 @@
 
 using namespace std;
 
-vector<vector<string>> questoesFaceisCG;
-vector<int> premios;
+/*Faceis: 1mil, 10mil
+Medias: 50mil, 100 mil
+Dificeis: 500 mil, 1milhao*/
+
+vector< vector<string> > questoesFaceisCG;
+
+vector<int> acertar;
+vector<int> parar;
+vector<int> errar;
+
 char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
+vector<string> opcoes = {"Pular", "Cartas", "Universitario", "Placa", "Parar"};
 
 string nome;
 string resposta;
-bool acertou;
 int premioAtual = 0;
 int indiceAleatorio;
 
+// Opcoes de ajuda
 int pulos = 3;
 int cartas = 1;
 int universitarios = 1;
 int placas = 1;
 
-void iniciarJogo();
-
-int perguntaAleatoria(vector<vector<string>> &vector);
+bool alternativaCorreta();
 
 char letraAleatoria(char alt[]);
 
-void pararJogo();
-
-void perderJogo();
-
-void ganharJogo();
-
-void iniciarJogo();
-
-void preencherPremios();
-
-void imprimirPremios();
-
-void preencherQuestoesFaceisCG();
-
-void imprimirQuestao();
+int perguntaAleatoria(vector< vector<string> > &vector);
 
 string escolherAlternativa();
 
-bool alternativaCorreta();
+void ganharJogo();
+
+void imprimirPremios();
+
+void imprimirQuestao();
 
 void imprimirResultado();
+
+void iniciarJogo();
+
+void introducao();
+
+void limparTela();
 
 void pararJogo();
 
 void perderJogo();
 
-void atualizarPremio();
+void preencherPremios();
+
+void preencherQuestoesFaceisCG();
+
+void titulo();
 
 int main() {
     iniciarJogo();
     return 0;
 }
 
-void iniciarJogo() {
+void titulo() {
+    cout << "SHOW DO MILHAO!" << endl;
+}
+
+void limparTela() {
+#ifdef WINDOWS
+    std::system("cls");
+#else
+    // Assume POSIX
+    std::system("clear");
+#endif
+}
+
+void introducao() {
     cout << "Bem vindo(a) ao SHOW DO MILHAO!" << endl << endl;
     cout << "Voce respondera a perguntas do nivel facil, medio e dificil." << endl;
     cout << "Teste seus conhecimentos e concorra ao premio maximo de R$ 1 milhao." << endl << endl;
     cout << "Vamos comecar. Diga-me o seu nome: ";
+}
+
+void iniciarJogo() {
+    introducao();
     cin >> nome;
 
     preencherPremios();
     preencherQuestoesFaceisCG();
-    // imprimirPremios();
+
+    limparTela();
+    titulo();
     imprimirQuestao();
     escolherAlternativa();
     imprimirResultado();
 }
 
 void preencherPremios() {
-    premios.push_back(1000);
-    premios.push_back(premios.at(0) * 10);
-    premios.push_back(premios.at(1) * 5);
-    premios.push_back(premios.at(2) * 2);
-    premios.push_back(premios.at(3) * 5);
-    premios.push_back(premios.at(4) * 2);
+    acertar.push_back(1000);
+    acertar.push_back(acertar.at(0) * 10);
+    acertar.push_back(acertar.at(1) * 5);
+    acertar.push_back(acertar.at(2) * 2);
+    acertar.push_back(acertar.at(3) * 5);
+    acertar.push_back(acertar.at(4) * 2);
+
+    parar.push_back(0);
+    parar.push_back(acertar.at(1) / 2);
+    parar.push_back(acertar.at(2) / 2);
+    parar.push_back(acertar.at(3) / 2);
+    parar.push_back(acertar.at(4) / 2);
+    parar.push_back(acertar.at(5) / 2);
+
+    errar.push_back(0);
+    errar.push_back(parar.at(1) / 2);
+    errar.push_back(parar.at(2) / 2);
+    errar.push_back(parar.at(3) / 2);
+    errar.push_back(parar.at(4) / 2);
+    errar.push_back(0);
+
 }
 
-void imprimirPremios() {
-    for (int i = 0; i < premios.size(); ++i) {
-        cout << premios.at(i) << endl;
+/*void imprimirPremios() {
+    for (int i = 0; i < acertar.size(); ++i) {
+        cout << "Acertar: R$" << acertar.at(i) << " | Parar: R$ " << parar.at(i) << " | Errar: R$" << errar.at(i)
+             << endl;
     }
-}
+}*/
 
 void preencherQuestoesFaceisCG() {
     vector<string> vetor1;
@@ -130,7 +172,8 @@ void preencherQuestoesFaceisCG() {
 }
 
 void imprimirQuestao() {
-    cout << "\nPergunta valendo: R$" << premios.at(premioAtual) << endl;
+    cout << "\nPergunta valendo: R$" << acertar.at(premioAtual) << " | Parar: R$" << parar.at(premioAtual)
+         << " | Errar: R$" << errar.at(premioAtual) << endl;
     indiceAleatorio = perguntaAleatoria(questoesFaceisCG);
     for (int i = 0; i < questoesFaceisCG.at(indiceAleatorio).size() - 2; ++i) {
         cout << questoesFaceisCG.at(indiceAleatorio).at(i) << endl;
@@ -153,53 +196,63 @@ string escolherAlternativa() {
 bool alternativaCorreta() {
     if (questoesFaceisCG.at(indiceAleatorio).at(5).compare(resposta) == 0 ||
         questoesFaceisCG.at(indiceAleatorio).at(6).compare(resposta) == 0) {
-        acertou = true;
+        premioAtual += 1;
         return true;
     } else {
-        acertou = false;
         return false;
     }
+
+    /*if (resposta.compare("5") == 0) {
+        pararJogo();
+    } else {
+        if (questoesFaceisCG.at(indiceAleatorio).at(5).compare(resposta) == 0 ||
+            questoesFaceisCG.at(indiceAleatorio).at(6).compare(resposta) == 0) {
+            premioAtual += 1;
+            return true;
+        } else {
+            return false;
+        }
+    }*/
 }
 
 void imprimirResultado() {
-    cout << "Sua resposta foi: " << resposta << endl;
+    if (resposta.compare("A") == 0 || resposta.compare("a") == 0 || resposta.compare("B") == 0 ||
+        resposta.compare("b") == 0 || resposta.compare("C") == 0 || resposta.compare("c") == 0 ||
+        resposta.compare("D") == 0 || resposta.compare("d") == 0) {
+        cout << "Sua resposta foi: " << resposta << endl;
+    } else if (resposta.compare("1") == 0 || resposta.compare("2") == 0 || resposta.compare("3") == 0 ||
+               resposta.compare("4") == 0 || resposta.compare("5") == 0) {
+        cout << "Voce escolheu a opcao: " << resposta << stoi(resposta) << endl;
+    }
+
     if (alternativaCorreta()) {
         cout << "Parabens " << nome << ", voce acertou!" << endl;
-        cout << "Voce tem: R$" << premios.at(premioAtual) << endl;
+        cout << "Voce tem: R$" << acertar.at(premioAtual - 1) << endl;
     } else {
         perderJogo();
     }
 }
 
 void pararJogo() {
-    cout << nome << ", voce decidiu parar o jogo e vai pra casa com R$" << premios.at(premioAtual) << "." << endl;
+    cout << nome << ", voce decidiu parar o jogo e vai pra casa com R$" << parar.at(premioAtual) << endl;
 }
 
 void perderJogo() {
-    if (premioAtual == 0) {
+    if (premioAtual == 0 || premioAtual == 5) {
         cout << "Infelizmente " << nome << ", voce errou e perdeu tudo." << endl;
         cout << "Boa sorte na proxima vez." << endl;
+    } else {
+        cout << "Infelizmente " << nome << ", voce errou e so ganhou R$" << errar.at(premioAtual) << endl;
+        cout << "Boa sorte na proxima vez." << endl;
     }
-
 }
 
 void ganharJogo() {
     cout << "PARABENS " << nome << "! Voce ganhou R$ 1 milhao!!!" << endl;
 }
 
-void atualizarPremio() {
-    if (acertou) {
-        premioAtual += 1;
-    }
-}
-
-/*Faceis: 1mil, 10mil
-Medias: 50mil, 100 mil
-Dificeis: 500 mil, 1milhao*/
-
-
-int perguntaAleatoria(vector<vector<string>> &vector) {
-    srand(time(nullptr));
+int perguntaAleatoria(vector< vector<string> > &vector) {
+    srand(time(0));
     return rand() % vector.size();
 }
 
@@ -208,3 +261,23 @@ char letraAleatoria(char alt[]) {
     int randomIndex = rand() % 4;
     return alt[randomIndex];
 }
+
+/*void respostaInvalida() {
+    if (!alternativaOpcaoValida()) {
+        cout << "Alternativa/opcao invalida. Tente novamente:" << endl;
+        cout << "Alternativas: A/a, B/b, C/c, D/d" << endl;
+        cout << "Opcoes: 1, 2, 3, 4 ou 5" << endl;
+        escolherAlternativa();
+    }
+
+}
+
+bool alternativaOpcaoValida() {
+    if (resposta.compare("A") == 0 || resposta.compare("a") == 0 || resposta.compare("B") == 0 ||
+        resposta.compare("b") == 0 || resposta.compare("C") == 0 || resposta.compare("c") == 0 ||
+        resposta.compare("D") == 0 || resposta.compare("d") == 0 || resposta.compare("1") == 0 ||
+        resposta.compare("2") == 0 || resposta.compare("3") == 0 ||
+        resposta.compare("4") == 0 || resposta.compare("5") == 0) {
+        return true;
+    }
+}*/
