@@ -7,63 +7,83 @@
 
 using namespace std;
 
-string ler;
-
+//Vetores
 vector<vector<string>> questoesFaceisCC;
 vector<vector<string>> questoesMediasCC;
 vector<vector<string>> questoesDificeisCC;
 vector<vector<string>> questoesFaceisGeral;
 vector<vector<string>> questoesMediasGeral;
 vector<vector<string>> questoesDificeisGeral;
-
+vector<vector<string>> faceisAux;
+vector<vector<string>> mediasAux;
+vector<vector<string>> dificeisAux;
 vector<int> premios;
+
+//Variaveis
+string ler;
 int numeroDaRodadaAtual = 1; //rodada 1 e 2(perguntas nivel facil), rodada 3 e 4(nivel medio), 5 e 6(nivel dificil)
 int indiceDaPerguntaSorteada;
 string letraRespostaCertaAtual = "";
 string nomeDoJogador;
 string resposta;
-bool continuar;
+bool continuar = true;
 
-
+//Metodos
+void iniciarJogo();
+void preencherQuestoes();
+void escolherCategoria();
+void preencherPremios();
+void recebeRespostaDaQuestao();
+void sorteiaPergunta();
+void imprimirQuestao();
+bool alternativaCorreta();
+void imprimirResultado();
+void prosseguir();
+int perguntaAleatoria(vector<vector<string>> &vector);
+void limparTela();
 
 
 
 char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
 bool acertou;
-int premioAtual = 0;
 int indiceAleatorio;
+int premioAtual = 0;
 int pulos = 3;
 int cartas = 1;
 int universitarios = 1;
 int placas = 1;
 
-void iniciarJogo();
-void preencherQuestoes();
-void escolherCategoria();
-void preencherPremios();
 
-
-int perguntaAleatoria(vector<vector<string>> &vector);
 char letraAleatoria(char alt[]);
 void pararJogo();
 void perderJogo();
 void ganharJogo();
 void imprimirPremios();
-void imprimirQuestao();
 string escolherAlternativa();
-bool alternativaCorreta();
-void imprimirResultado();
 void pararJogo();
 void perderJogo();
 void atualizarPremio();
 
 int main() {
     iniciarJogo();
-    //preencherQuestoesFaceisCG();
-    //questoesFaceisCG.erase(questoesFaceisCG.begin()+ indice ); //remover elemento da posicao indice
-
-
+    do
+    {
+        sorteiaPergunta();
+        imprimirQuestao();
+        recebeRespostaDaQuestao();
+        limparTela();
+        imprimirResultado();
+    }while(continuar);
     return 0;
+}
+
+void limparTela() {
+#ifdef WINDOWS
+    std::system("cls");
+#else
+    // Assume POSIX
+    std::system("clear");
+#endif
 }
 
 void iniciarJogo() {
@@ -78,15 +98,16 @@ void iniciarJogo() {
     preencherQuestoes();
     escolherCategoria();
     preencherPremios();
+    cout << "----------------------------------------------------------------" << endl;
     cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
 }
 
 void escolherCategoria(){
-    cout << "\nQual categoria de questoes voce deseja?" << endl;
+    cout << "----------------------------------------------------------------" << endl;
+    cout << "Qual categoria de questoes voce deseja?" << endl;
     cout << "1) Computacao" << endl;
     cout << "2) Conhecimentos Gerais" << endl;
     cout << "\nDigite o numero da categoria: ";
-
     do
     {
         cin >> resposta;
@@ -94,6 +115,17 @@ void escolherCategoria(){
             cout << "Categoria invalida. Digite 1 ou 2: ";
         }
     } while((resposta.compare("1") != 0) && (resposta.compare("2") != 0));
+
+    if(resposta.compare("1") == 0){
+        faceisAux = questoesFaceisCC;
+        mediasAux = questoesMediasCC;
+        dificeisAux = questoesDificeisCC;
+    }else if(resposta.compare("2") == 0){
+        faceisAux = questoesFaceisGeral;
+        mediasAux = questoesMediasGeral;
+        dificeisAux = questoesDificeisGeral;
+    }
+    limparTela();
 }
 
 void preencherPremios() {
@@ -112,10 +144,9 @@ void imprimirPremios() {
 }
 
 void preencherQuestoes() {
-
     /**
-    //eh preciso limpar pra garantir que elas vao estar zeradas antes de preenche-las.
-    //pois no final de cada rodada sobram elementos dentro da lista
+    eh preciso limpar pra garantir que elas vao estar zeradas antes de preenche-las.
+    pois no final de cada rodada sobram elementos dentro da lista
     */
     questoesFaceisCC.clear();
     questoesMediasCC.clear();
@@ -232,7 +263,7 @@ void preencherQuestoes() {
     questoesFaceisCC.push_back(vetorAux);
     vetorAux.clear();
 
-    vetorAux.push_back("Qual alternativa nao contém um Hardware?");
+    vetorAux.push_back("Qual alternativa nao contem um Hardware?");
     vetorAux.push_back("A) Mouse");
     vetorAux.push_back("B) Processador");
     vetorAux.push_back("C) Chipset");
@@ -242,7 +273,7 @@ void preencherQuestoes() {
     questoesFaceisCC.push_back(vetorAux);
     vetorAux.clear();
 
-    vetorAux.push_back("E o principal módulo do computador, onde estão conectados todos os periféricos");
+    vetorAux.push_back("Eh o principal modulo do computador, onde estao conectados todos os perifericos");
     vetorAux.push_back("A) CPU");
     vetorAux.push_back("B) Placa mae");
     vetorAux.push_back("C) Gabinete");
@@ -253,7 +284,7 @@ void preencherQuestoes() {
     vetorAux.clear();
 
     //medias
-    vetorAux.push_back("Qual alternativa não contém um Hardware?");
+    vetorAux.push_back("Qual alternativa nao contem um Hardware?");
     vetorAux.push_back("A) Mouse");
     vetorAux.push_back("B) Processador");
     vetorAux.push_back("C) Chipset");
@@ -263,7 +294,7 @@ void preencherQuestoes() {
     questoesMediasCC.push_back(vetorAux);
     vetorAux.clear();
 
-    vetorAux.push_back("Na computação, qual tecnologia substituiu a válvula?");
+    vetorAux.push_back("Na computacao, qual tecnologia substituiu a valvula?");
     vetorAux.push_back("A) Capacitor");
     vetorAux.push_back("B) Resistor");
     vetorAux.push_back("C) Transistor");
@@ -273,51 +304,91 @@ void preencherQuestoes() {
     questoesMediasCC.push_back(vetorAux);
     vetorAux.clear();
 
-    vetorAux.push_back("Dizer que a classe A estende a classe B é o mesmo que dizer que:");
-    vetorAux.push_back("A) As classes são irmas");
-    vetorAux.push_back("B) A é superclasse de B");
-    vetorAux.push_back("C) B é filha de A");
-    vetorAux.push_back("D) A é filha de B");
+    vetorAux.push_back("Dizer que a classe A estende a classe B eh o mesmo que dizer que:");
+    vetorAux.push_back("A) As classes sao irmas");
+    vetorAux.push_back("B) A eh superclasse de B");
+    vetorAux.push_back("C) B eh filha de A");
+    vetorAux.push_back("D) A eh filha de B");
     vetorAux.push_back("D");
     vetorAux.push_back("d");
     questoesMediasCC.push_back(vetorAux);
     vetorAux.clear();
 
     //dificeis
-    vetorAux.push_back("Na ordem cronológica, marque a alternativa correta");
-    vetorAux.push_back("A) Ábaco, Eniac, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("B) Eniac, Ábaco, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("C) Ábaco, Eniac, Transistor, Chip e Microprocessador.");
-    vetorAux.push_back("D) Ábaco, Eniac, Chip, Microprocessador e Transistor");
+    vetorAux.push_back("Na ordem cronologica, marque a alternativa correta");
+    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
+    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
     vetorAux.push_back("C");
     vetorAux.push_back("c");
     questoesDificeisCC.push_back(vetorAux);
     vetorAux.clear();
 
     vetorAux.push_back("Em ordem cronológica, marque a alternativa correta");
-    vetorAux.push_back("A) Ábaco, Eniac, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("B) Eniac, Ábaco, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("C) Ábaco, Eniac, Transistor, Chip e Microprocessador.");
-    vetorAux.push_back("D) Ábaco, Eniac, Chip, Microprocessador e Transistor");
+    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
+    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
     vetorAux.push_back("C");
     vetorAux.push_back("c");
     questoesDificeisCC.push_back(vetorAux);
     vetorAux.clear();
 
-    vetorAux.push_back("Pela ordem cronológica, marque a alternativa correta");
-    vetorAux.push_back("A) Ábaco, Eniac, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("B) Eniac, Ábaco, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("C) Ábaco, Eniac, Transistor, Chip e Microprocessador.");
-    vetorAux.push_back("D) Ábaco, Eniac, Chip, Microprocessador e Transistor");
+    vetorAux.push_back("Pela ordem cronologica, marque a alternativa correta");
+    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
+    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
     vetorAux.push_back("C");
     vetorAux.push_back("c");
     questoesDificeisCC.push_back(vetorAux);
     vetorAux.clear();
 }
 
+/**
+//recebe a resposta da alternativa e verifica se a letra informada eh valida
+*/
+void recebeRespostaDaQuestao(){
+    bool respostaInvalida;
+    do
+    {
+        cin >> resposta;
+        if((resposta.compare("a") != 0) && (resposta.compare("b") != 0 && (resposta.compare("c") != 0) && (resposta.compare("d") != 0))){
+            respostaInvalida = true;
+            cout << "Resposta  invalida. Digite a, b, c ou d: ";
+        }else{
+            respostaInvalida = false;
+        }
+    }while(respostaInvalida);
+}
+
+/**
+//sorteia uma pergunta aleatoria retornando o indice da pergunta
+*/
+void sorteiaPergunta(){
+    if(numeroDaRodadaAtual <= 2)
+        indiceDaPerguntaSorteada = perguntaAleatoria(faceisAux);
+    else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4)
+        indiceDaPerguntaSorteada = perguntaAleatoria(mediasAux);
+    else
+        indiceDaPerguntaSorteada = perguntaAleatoria(dificeisAux);
+}
+
 void imprimirQuestao() {
-
-
+    cout << "----------------------------------------------------------------" << endl;
+    cout << "Prepare-se para a pergunta que vale R$ "<< premios.at(numeroDaRodadaAtual-1) << endl <<endl;
+    if(numeroDaRodadaAtual <= 2){
+        for(int i=0 ; i<5 ; ++i)
+            cout << faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
+        for(int i=0 ; i<5 ; ++i)
+            cout << mediasAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+    }else{
+        for(int i=0 ; i<5 ; ++i)
+            cout << dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+    }
+    cout << "Resposta: ";
 }
 
 string escolherAlternativa() {
@@ -329,23 +400,96 @@ string escolherAlternativa() {
     } else {
         cin >> resposta;
     }
-
     return resposta;
 }
 
-bool alternativaCorreta() {
-
+bool alternativaCorreta(){
+    bool retorno;
+    if(numeroDaRodadaAtual <= 2){
+        letraRespostaCertaAtual = faceisAux.at(indiceDaPerguntaSorteada).at(5);
+        retorno = faceisAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || faceisAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
+        faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada);
+    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
+        letraRespostaCertaAtual = mediasAux.at(indiceDaPerguntaSorteada).at(5);
+        retorno = mediasAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || mediasAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
+        mediasAux.erase(mediasAux.begin() + indiceDaPerguntaSorteada);
+    }else{
+        letraRespostaCertaAtual = dificeisAux.at(indiceDaPerguntaSorteada).at(5);
+        retorno = dificeisAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || dificeisAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
+        dificeisAux.erase(dificeisAux.begin() + indiceDaPerguntaSorteada);
+    }
+    return retorno;
 }
 
 void imprimirResultado() {
-    cout << "Sua resposta foi: " << resposta << endl;
     if (alternativaCorreta()) {
-        cout << "Parabens " << nomeDoJogador << ", voce acertou!" << endl;
-        cout << "Voce tem: R$" << premios.at(premioAtual) << endl;
+        cout << "----------------------------------------------------------------" << endl;
+        cout << "Parabens! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1) << endl << endl;
+        if(premios.size() == numeroDaRodadaAtual){ //entao respondeu a ultima rodada
+            cout << "$$$ Agora voce e o mais novo milionario do Brasil! $$$" << endl << endl;
+            numeroDaRodadaAtual = 1;
+            prosseguir();
+        }else{
+            numeroDaRodadaAtual++;
+            cout << "Proxima pergunta..." << endl;
+        }
     } else {
-        perderJogo();
+        cout << "----------------------------------------------------------------" << endl;
+        cout << "Que pena, voce errou" << endl << endl;
+        cout << "A resposta certa era: " << letraRespostaCertaAtual << endl;
+        cout << "----------------------------------------------------------------" << endl;
+        if(numeroDaRodadaAtual != 1){
+            cout << "Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl;
+        }
+        numeroDaRodadaAtual = 1;
+        prosseguir();
     }
 }
+
+void prosseguir(){
+    bool respostaInvalida;
+    cout << "Deseja continuar jogando? s/n ";
+		do
+        {
+			cin >> resposta;
+			if(resposta.compare("n") == 0) {
+				continuar = false;
+				respostaInvalida = false;
+			}else if(resposta.compare("s") == 0) {
+				continuar = true;
+				respostaInvalida = false;
+			}else {
+				respostaInvalida = true;
+				cout << "Resposta invalida. Digite s ou n: ";
+			}
+		} while (respostaInvalida);
+
+		if (continuar) {
+			preencherQuestoes();
+			limparTela();
+			escolherCategoria();
+		}
+
+int perguntaAleatoria(vector<vector<string>> &vector) {
+    srand(time(nullptr));
+    return rand() % vector.size();
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void pararJogo() {
     cout << nomeDoJogador << ", voce decidiu parar o jogo e vai pra casa com R$" << premios.at(premioAtual) << "." << endl;
@@ -374,10 +518,6 @@ Medias: 50mil, 100 mil
 Dificeis: 500 mil, 1milhao*/
 
 
-int perguntaAleatoria(vector<vector<string>> &vector) {
-    srand(time(nullptr));
-    return rand() % vector.size();
-}
 
 // Essa funcao eh usada para o bot
 char letraAleatoria(char alt[]) {
