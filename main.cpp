@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//Vetores
+///Vetores
 vector<vector<string>> questoesFaceisCC;
 vector<vector<string>> questoesMediasCC;
 vector<vector<string>> questoesDificeisCC;
@@ -19,16 +19,16 @@ vector<vector<string>> mediasAux;
 vector<vector<string>> dificeisAux;
 vector<int> premios;
 
-//Variaveis
+///Variaveis
 string ler;
-int numeroDaRodadaAtual = 1; //rodada 1 e 2(perguntas nivel facil), rodada 3 e 4(nivel medio), 5 e 6(nivel dificil)
+int numeroDaRodadaAtual = 1; ///rodada 1 e 2(perguntas nivel facil), rodada 3 e 4(nivel medio), 5 e 6(nivel dificil)
 int indiceDaPerguntaSorteada;
 string letraRespostaCertaAtual = "";
 string nomeDoJogador;
 string resposta;
 bool continuar = true;
 
-//Metodos
+///Metodos
 void iniciarJogo();
 void preencherQuestoes();
 void escolherCategoria();
@@ -40,13 +40,13 @@ bool alternativaCorreta();
 void imprimirResultado();
 void prosseguir();
 int perguntaAleatoria(vector<vector<string>> &vector);
+void cabecalho();
 void limparTela();
-
-void usarPulo();
-void usarCartas();
-void usarUniversitarios();
-void usarPlacas();
-void pararJogo();
+void usarPulo(); ///falta implementar
+void usarCartas();///falta implementar
+void usarUniversitarios();///falta implementar
+void usarPlacas();///falta implementar
+void pararJogo();///falta implementar
 
 
 
@@ -60,7 +60,6 @@ int pulos = 3;
 int cartas = 1;
 int universitarios = 1;
 int placas = 1;
-
 
 char letraAleatoria(char alt[]);
 void perderJogo();
@@ -90,34 +89,46 @@ void limparTela() {
     std::system("clear");
 #endif
 }
-
-void iniciarJogo() {
-    cout << "___________________________________________________________________" << endl;
+void cabecalho(){
+    cout << "-------------------------------------------------------------------" << endl;
     cout << "_____________________________ S H O W _____________________________" << endl;
     cout << "_______________________________ D O _______________________________" << endl;
     cout << "___________________________ M I L H A O ___________________________" << endl;
-    cout << "___________________________________________________________________" << endl;
+    cout << "-------------------------------------------------------------------" << endl;
     cout << "Teste seus conhecimentos e concorra ao premio maximo de R$ 1 milhao." << endl << endl;
+}
+
+void iniciarJogo() {
+    preencherQuestoes(); /// tem que vir antes de escolherCategorias
+    preencherPremios();
+    cabecalho();
     cout << "Diga-me o seu nome: ";
     cin >> nomeDoJogador;
-    preencherQuestoes();
+    //cout << "----------------------------------------------------------------" << endl;
+    //cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
     escolherCategoria();
-    preencherPremios();
-    cout << "----------------------------------------------------------------" << endl;
-    cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
 }
 
 void escolherCategoria(){
-    cout << "----------------------------------------------------------------" << endl;
+    limparTela();
+    if(numeroDaRodadaAtual == 1){
+        cabecalho();
+    }
     cout << "Qual categoria de questoes voce deseja?" << endl;
     cout << "1) Computacao" << endl;
     cout << "2) Conhecimentos Gerais" << endl;
     cout << "\nDigite o numero da categoria: ";
+
     do
     {
         cin >> resposta;
-        if((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){
-            cout << "Categoria invalida. Digite 1 ou 2: ";
+        if((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){ /// Se resposta nao for 1 e nao for 0, entra no laco
+            limparTela();
+            cabecalho();
+            cout << "Qual categoria de questoes voce deseja?" << endl;
+            cout << "1) Computacao" << endl;
+            cout << "2) Conhecimentos Gerais" << endl;
+            cout << "\nCategoria invalida. Digite 1 ou 2: ";
         }
     } while((resposta.compare("1") != 0) && (resposta.compare("2") != 0));
 
@@ -133,317 +144,7 @@ void escolherCategoria(){
     limparTela();
 }
 
-void preencherPremios() {
-    premios.push_back(1000);
-    premios.push_back(premios.at(0) * 10);
-    premios.push_back(premios.at(1) * 5);
-    premios.push_back(premios.at(2) * 2);
-    premios.push_back(premios.at(3) * 5);
-    premios.push_back(premios.at(4) * 2);
-}
-
-void imprimirPremios() {
-    for (int i = 0; i < premios.size(); ++i) {
-        cout << premios.at(i) << endl;
-    }
-}
-
-void preencherQuestoes() {
-    /**
-    eh preciso limpar pra garantir que elas vao estar zeradas antes de preenche-las.
-    pois no final de cada rodada sobram elementos dentro da lista
-    */
-    questoesFaceisCC.clear();
-    questoesMediasCC.clear();
-    questoesDificeisCC.clear();
-    questoesFaceisGeral.clear();
-    questoesMediasGeral.clear();
-    questoesDificeisGeral.clear();
-
-    vector<string> vetorAux;
-
-    //GERAL
-    //faceis
-    vetorAux.push_back("Quanto vale 2+2?");
-    vetorAux.push_back("A) 5");
-    vetorAux.push_back("B) 7");
-    vetorAux.push_back("C) 4");
-    vetorAux.push_back("D) 2");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesFaceisGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("O que esta escrito na bandeira do Brasil?");
-    vetorAux.push_back("A) Ordem e Regresso");
-    vetorAux.push_back("B) Ordem e Retrocesso");
-    vetorAux.push_back("C) Ordem e Progresso");
-    vetorAux.push_back("D) Progresso e Ordem");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesFaceisGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual a traducao da palavra inglesa 'horse'?");
-    vetorAux.push_back("A) Casa");
-    vetorAux.push_back("B) Cavalo");
-    vetorAux.push_back("C) Elefante");
-    vetorAux.push_back("D) Hipopótamo");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesFaceisGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    //medias
-    vetorAux.push_back("A frase 'I have a dream' é associada a: ");
-    vetorAux.push_back("A) George W. Bush");
-    vetorAux.push_back("B) Martin Luther King");
-    vetorAux.push_back("C) Michael Jackson");
-    vetorAux.push_back("D) Snoop Dogg");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesMediasGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual o maior e o menor país do mundo? ");
-    vetorAux.push_back("A) Russia e Vaticano");
-    vetorAux.push_back("B) China e Nepal");
-    vetorAux.push_back("C) Guiana Francesa e Estados Unidos");
-    vetorAux.push_back("D) Canada e Bangladesh");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesMediasGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual foi o primeiro recurso usado para explicar a origem das coias?");
-    vetorAux.push_back("A) Mitologia");
-    vetorAux.push_back("B) Filosofia");
-    vetorAux.push_back("C) Matematica");
-    vetorAux.push_back("D) Astronomia");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesMediasGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    //dificeis
-    vetorAux.push_back("Qual a altura em metros da rede de volei masculino e feminino?");
-    vetorAux.push_back("A) 2,5 e 2,0");
-    vetorAux.push_back("B) 2,45 para ambos");
-    vetorAux.push_back("C) 1,8 e 1,55");
-    vetorAux.push_back("D) 2,43 e 2,24");
-    vetorAux.push_back("D");
-    vetorAux.push_back("d");
-    questoesDificeisGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Em que periodo pre-historico o fogo foi descoberto?");
-    vetorAux.push_back("A) Neolitico");
-    vetorAux.push_back("B) Paleolitico");
-    vetorAux.push_back("C) Neolitico");
-    vetorAux.push_back("D) Idade Media");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesDificeisGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual desses filmes foi baseado na obra de Shakespeare?");
-    vetorAux.push_back("A) Muito Barulho por Nada (2012)");
-    vetorAux.push_back("B) Capitães de Areia (2011)");
-    vetorAux.push_back("C) A Dama das Camélias (1936)");
-    vetorAux.push_back("D) Excalibur");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesDificeisGeral.push_back(vetorAux);
-    vetorAux.clear();
-
-    //COMPUTACAO
-    //faceis
-    vetorAux.push_back("Qual o valor em decimal do binario 00000111");
-    vetorAux.push_back("A) 7");
-    vetorAux.push_back("B) 8");
-    vetorAux.push_back("C) 6");
-    vetorAux.push_back("D) 14");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesFaceisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual alternativa nao contem um Hardware?");
-    vetorAux.push_back("A) Mouse");
-    vetorAux.push_back("B) Processador");
-    vetorAux.push_back("C) Chipset");
-    vetorAux.push_back("D) Debian");
-    vetorAux.push_back("D");
-    vetorAux.push_back("d");
-    questoesFaceisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Eh o principal modulo do computador, onde estao conectados todos os perifericos");
-    vetorAux.push_back("A) CPU");
-    vetorAux.push_back("B) Placa mae");
-    vetorAux.push_back("C) Gabinete");
-    vetorAux.push_back("D) Entrada usb");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesFaceisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual o valor em decimal do binario 00010101");
-    vetorAux.push_back("A) 21");
-    vetorAux.push_back("B) 8");
-    vetorAux.push_back("C) 20");
-    vetorAux.push_back("D) 14");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesFaceisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual alternativa contem um Hardware?");
-    vetorAux.push_back("A) Windows");
-    vetorAux.push_back("B) Unix");
-    vetorAux.push_back("C) CPU");
-    vetorAux.push_back("D) Debian");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesFaceisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("O que significa USB?");
-    vetorAux.push_back("A) Universal Sata Bus");
-    vetorAux.push_back("B) Universal Serial Bus");
-    vetorAux.push_back("C) Universal Sata Branch");
-    vetorAux.push_back("D) Universal Serial Builder");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesFaceisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    //medias
-    vetorAux.push_back("Em computacao, o que significa C.S.?");
-    vetorAux.push_back("A) Command Star");
-    vetorAux.push_back("B) Counter Strike");
-    vetorAux.push_back("C) Chip Set");
-    vetorAux.push_back("D) Computer Science");
-    vetorAux.push_back("D");
-    vetorAux.push_back("d");
-    questoesMediasCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Na computacao, qual tecnologia substituiu a valvula?");
-    vetorAux.push_back("A) Capacitor");
-    vetorAux.push_back("B) Resistor");
-    vetorAux.push_back("C) Transistor");
-    vetorAux.push_back("D) Diodo");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesMediasCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Dizer que a classe A estende a classe B eh o mesmo que dizer que:");
-    vetorAux.push_back("A) As classes sao irmas");
-    vetorAux.push_back("B) A eh superclasse de B");
-    vetorAux.push_back("C) B eh filha de A");
-    vetorAux.push_back("D) A eh filha de B");
-    vetorAux.push_back("D");
-    vetorAux.push_back("d");
-    questoesMediasCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Em computacao, a sigla S.O. significa: ");
-    vetorAux.push_back("A) Sistema Ocioso");
-    vetorAux.push_back("B) Sistema Ondulatorio");
-    vetorAux.push_back("C) Sistema Ok");
-    vetorAux.push_back("D) Sistema Operacional");
-    vetorAux.push_back("D");
-    vetorAux.push_back("d");
-    questoesMediasCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("O que eh um ENIAC");
-    vetorAux.push_back("A) Um computador");
-    vetorAux.push_back("B) Uma configuracao");
-    vetorAux.push_back("C) Um congresso");
-    vetorAux.push_back("D) Um jogo");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesMediasCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Por que um sistema operacional eh importante?");
-    vetorAux.push_back("A) Porque eh a unidade central de procedimentos do computador");
-    vetorAux.push_back("B) Porque ele organiza e administra os recursos do computador possibilitando seu uso");
-    vetorAux.push_back("C) Para assistir Netflix");
-    vetorAux.push_back("D) Para fazer trabalhos e salvar documentos com maior segurança");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesMediasCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    //dificeis
-    vetorAux.push_back("Na ordem cronologica, marque a alternativa correta");
-    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
-    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesDificeisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Qual o nome completo de Steven Jobs");
-    vetorAux.push_back("A) Steven Paul Jobs");
-    vetorAux.push_back("B) Steven Apple Jobs");
-    vetorAux.push_back("C) Steven Spielberg Jobs");
-    vetorAux.push_back("D) Steven Seagal Jobs");
-    vetorAux.push_back("A");
-    vetorAux.push_back("a");
-    questoesDificeisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Pela ordem cronologica, marque a alternativa correta");
-    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
-    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesDificeisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Se X, então Y. Não Y, logo: ");
-    vetorAux.push_back("A) Não Y");
-    vetorAux.push_back("B) X");
-    vetorAux.push_back("C) Não X");
-    vetorAux.push_back("D) Y");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
-    questoesDificeisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("O que é mais rapido? ");
-    vetorAux.push_back("A) HDD");
-    vetorAux.push_back("B) CD");
-    vetorAux.push_back("C) DVD");
-    vetorAux.push_back("D) SSD");
-    vetorAux.push_back("D");
-    vetorAux.push_back("d");
-    questoesDificeisCC.push_back(vetorAux);
-    vetorAux.clear();
-
-    vetorAux.push_back("Em OO existe uma medida do grau de dependência entre objetos que é: ");
-    vetorAux.push_back("A) Integracao");
-    vetorAux.push_back("B) Acoplamento");
-    vetorAux.push_back("C) Heranca");
-    vetorAux.push_back("D) Protocolo");
-    vetorAux.push_back("B");
-    vetorAux.push_back("b");
-    questoesDificeisCC.push_back(vetorAux);
-    vetorAux.clear();
-}
-
-/**
-//recebe a resposta da alternativa e verifica se a letra informada eh valida
-*/
+/// recebe a resposta da alternativa e verifica se a letra informada eh valida
 void recebeRespostaDaQuestao(){
     bool respostaInvalida;
     do
@@ -453,26 +154,28 @@ void recebeRespostaDaQuestao(){
         if( (resposta.compare("a") == 0) || (resposta.compare("b") == 0) || (resposta.compare("c") == 0) || (resposta.compare("d") == 0) ){
             respostaInvalida = false;
 
-        }else if( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ){
-
+        }else if ( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ) {
+            /**
             respostaInvalida = false;
 
-           /** switch(resposta){
-                case "1":
-                    usarPulo();
-                    break;
-                case "2":
-                    usarCartas();
-                    break;
-                case "3":
-                    usarUniversitarios();
-                    break;
-                case "4":
-                    usarPlacas();
-                    break;
-                case "5":
-                    pararJogo();
-                    break; */
+                switch(resposta)
+                {
+                    case "1":
+                        usarPulo();
+                        break;
+                    case "2":
+                        usarCartas();
+                        break;
+                    case "3":
+                        usarUniversitarios();
+                        break;
+                    case "4":
+                        usarPlacas();
+                        break;
+                    case "5":
+                        pararJogo();
+                        break;
+            }*/
         }else{
             respostaInvalida = true;
             cout << "Resposta  invalida. Digite a, b, c ou d: ";
@@ -482,9 +185,8 @@ void recebeRespostaDaQuestao(){
 
 }
 
-/**
-//sorteia uma pergunta aleatoria retornando o indice da pergunta
-*/
+
+/// sorteia uma pergunta aleatoria retornando o indice da pergunta
 void sorteiaPergunta(){
     if(numeroDaRodadaAtual <= 2)
         indiceDaPerguntaSorteada = perguntaAleatoria(faceisAux);
@@ -495,26 +197,28 @@ void sorteiaPergunta(){
 }
 
 void imprimirQuestao() {
+    if(numeroDaRodadaAtual == 1){
+        cout << "----------------------------------------------------------------" << endl;
+        cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
+    }
     cout << "----------------------------------------------------------------" << endl;
-    cout << "Prepare-se para a pergunta que vale R$ "<< premios.at(numeroDaRodadaAtual-1) << endl <<endl;
+    cout << "Prepare-se para a pergunta que vale R$ " << premios.at(numeroDaRodadaAtual-1) << endl <<endl;
+
     cout << "ACERTAR: "<< premios.at(numeroDaRodadaAtual-1);
     if(numeroDaRodadaAtual == 1){
-            cout << "   PARAR: 0";
-        cout << "   ERRAR: 0" << endl <<endl;
+        cout << "   PARAR: 0"; cout << "   ERRAR: 0" << endl <<endl;
     }else{
-        cout << "   PARAR: " << premios.at(numeroDaRodadaAtual-2);
-        cout << "   ERRAR: " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
+        cout << "   PARAR: " << premios.at(numeroDaRodadaAtual-2); cout << "   ERRAR: " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
     }
 
-
     if(numeroDaRodadaAtual <= 2){
-        for(int i=0 ; i<5 ; ++i)
+        for(int i = 0 ; i < 5 ; ++i)
             cout << faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
-        for(int i=0 ; i<5 ; ++i)
+        for(int i = 0 ; i < 5 ; ++i)
             cout << mediasAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }else{
-        for(int i=0 ; i<5 ; ++i)
+        for(int i = 0 ; i < 5 ; ++i)
             cout << dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }
     cout << "\n";
@@ -524,39 +228,25 @@ void imprimirQuestao() {
     cout << "4) Placas" << endl;
     cout << "5) Parar" << endl << endl;
 
-
     cout << "Resposta: ";
-}
-
-void verifica(){
-
-
-
-}
-
-string escolherAlternativa() {
-    string nome_bot = nomeDoJogador;
-    transform(nome_bot.begin(), nome_bot.end(), nome_bot.begin(), ::tolower);
-    cout << "\nEscolha uma alternativa:" << endl;
-    if (nome_bot.compare("bot") == 0) {
-        resposta = letraAleatoria(alternativas);
-    } else {
-        cin >> resposta;
-    }
-    return resposta;
 }
 
 bool alternativaCorreta(){
     bool retorno;
-    if(numeroDaRodadaAtual <= 2){
-        letraRespostaCertaAtual = faceisAux.at(indiceDaPerguntaSorteada).at(5);
+    if(numeroDaRodadaAtual <= 2){ ///questoes faceis
+
+        letraRespostaCertaAtual = faceisAux.at(indiceDaPerguntaSorteada).at(5); ///poderia ser a 6, ai seria a letra minuscula
         retorno = faceisAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || faceisAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
-        faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada);
-    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
+        faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada); ///agora apago essa questao pra ela nao se repetir em outras rodadas
+
+    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){ ///questoes medias
+
         letraRespostaCertaAtual = mediasAux.at(indiceDaPerguntaSorteada).at(5);
         retorno = mediasAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || mediasAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
         mediasAux.erase(mediasAux.begin() + indiceDaPerguntaSorteada);
-    }else{
+
+    }else{ ///questoes dificeis
+
         letraRespostaCertaAtual = dificeisAux.at(indiceDaPerguntaSorteada).at(5);
         retorno = dificeisAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || dificeisAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
         dificeisAux.erase(dificeisAux.begin() + indiceDaPerguntaSorteada);
@@ -566,38 +256,35 @@ bool alternativaCorreta(){
 
 void imprimirResultado() {
     if(continuar != false){
-
         if (alternativaCorreta()) {
             cout << "----------------------------------------------------------------" << endl;
             cout << "Parabens! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1) << endl << endl;
-            if(premios.size() == numeroDaRodadaAtual){ //entao respondeu a ultima rodada
-                cout << "$$$ Agora voce e o mais novo milionario do Brasil! $$$" << endl << endl;
+
+            if(premios.size() == numeroDaRodadaAtual){ ///entao respondeu a ultima rodada
+                cout << "$$$ Agora voce e o mais novo milionario do Brasil! $$$" << endl;
+                cout << "----------------------------------------------------------------" << endl << endl;
                 numeroDaRodadaAtual = 1;
                 prosseguir();
             }else{
                 numeroDaRodadaAtual++;
                 cout << "Proxima pergunta..." << endl;
             }
-        } else {
+        } else { ///errou a questao
             cout << "----------------------------------------------------------------" << endl;
             cout << "Que pena, voce errou" << endl << endl;
             cout << "A resposta certa era: " << letraRespostaCertaAtual << endl;
             cout << "----------------------------------------------------------------" << endl;
             if(numeroDaRodadaAtual != 1){
-                cout << "Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl;
+                cout << "Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl << endl;
             }
             numeroDaRodadaAtual = 1;
             prosseguir();
         }
 
     }else{
-
         numeroDaRodadaAtual = 1;
         prosseguir();
-
     }
-
-
 
 }
 
@@ -631,6 +318,334 @@ int perguntaAleatoria(vector<vector<string>> &vector) {
     return rand() % vector.size();
 }
 
+void preencherPremios() {
+    premios.push_back(1000);
+    premios.push_back(premios.at(0) * 10);
+    premios.push_back(premios.at(1) * 5);
+    premios.push_back(premios.at(2) * 2);
+    premios.push_back(premios.at(3) * 5);
+    premios.push_back(premios.at(4) * 2);
+}
+
+void preencherQuestoes() {
+    /// eh preciso limpar pra garantir que vao estar zerados antes de preenche-los.
+    /// pois no final de cada rodada sobram elementos(questoes) dentro da lista
+    questoesFaceisCC.clear();
+    questoesMediasCC.clear();
+    questoesDificeisCC.clear();
+    questoesFaceisGeral.clear();
+    questoesMediasGeral.clear();
+    questoesDificeisGeral.clear();
+
+    /// vetor auxiliar que sera adicionado ao vetores principais
+    /// depois da insercao esse vetor eh zerado e novas questoes sao atribuidas a ele
+    vector<string> vetorAux;
+
+    ///-----------------------CONHECIMENTO GERAL----------------------------
+    ///faceis
+    ///1
+    vetorAux.push_back("Quanto vale 2+2?");
+    vetorAux.push_back("A) 5");
+    vetorAux.push_back("B) 7");
+    vetorAux.push_back("C) 4");
+    vetorAux.push_back("D) 2");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesFaceisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///2
+    vetorAux.push_back("O que esta escrito na bandeira do Brasil?");
+    vetorAux.push_back("A) Ordem e Regresso");
+    vetorAux.push_back("B) Ordem e Retrocesso");
+    vetorAux.push_back("C) Ordem e Progresso");
+    vetorAux.push_back("D) Progresso e Ordem");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesFaceisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///3
+    vetorAux.push_back("Qual a traducao da palavra inglesa 'horse'?");
+    vetorAux.push_back("A) Casa");
+    vetorAux.push_back("B) Cavalo");
+    vetorAux.push_back("C) Elefante");
+    vetorAux.push_back("D) Hipopótamo");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesFaceisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///medias
+    ///1
+    vetorAux.push_back("A frase 'I have a dream' eh associada a: ");
+    vetorAux.push_back("A) George W. Bush");
+    vetorAux.push_back("B) Martin Luther King");
+    vetorAux.push_back("C) Michael Jackson");
+    vetorAux.push_back("D) Snoop Dogg");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesMediasGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///2
+    vetorAux.push_back("Qual o maior e o menor país do mundo? ");
+    vetorAux.push_back("A) Russia e Vaticano");
+    vetorAux.push_back("B) China e Nepal");
+    vetorAux.push_back("C) Guiana Francesa e Estados Unidos");
+    vetorAux.push_back("D) Canada e Bangladesh");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesMediasGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///3
+    vetorAux.push_back("Qual foi o primeiro recurso usado para explicar a origem das coias?");
+    vetorAux.push_back("A) Mitologia");
+    vetorAux.push_back("B) Filosofia");
+    vetorAux.push_back("C) Matematica");
+    vetorAux.push_back("D) Astronomia");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesMediasGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///dificeis
+    ///1
+    vetorAux.push_back("Qual a altura em metros da rede de volei masculino e feminino?");
+    vetorAux.push_back("A) 2,5 e 2,0");
+    vetorAux.push_back("B) 2,45 para ambos");
+    vetorAux.push_back("C) 1,8 e 1,55");
+    vetorAux.push_back("D) 2,43 e 2,24");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesDificeisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///2
+    vetorAux.push_back("Em que periodo pre-historico o fogo foi descoberto?");
+    vetorAux.push_back("A) Neolitico");
+    vetorAux.push_back("B) Paleolitico");
+    vetorAux.push_back("C) Neolitico");
+    vetorAux.push_back("D) Idade Media");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesDificeisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///3
+    vetorAux.push_back("Qual desses filmes foi baseado na obra de Shakespeare?");
+    vetorAux.push_back("A) Muito Barulho por Nada (2012)");
+    vetorAux.push_back("B) Capitães de Areia (2011)");
+    vetorAux.push_back("C) A Dama das Camélias (1936)");
+    vetorAux.push_back("D) Excalibur");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesDificeisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///-----------------------COMPUTACAO----------------------------
+    ///faceis
+    ///1
+    vetorAux.push_back("Qual o valor em decimal do binario 00000111");
+    vetorAux.push_back("A) 7");
+    vetorAux.push_back("B) 8");
+    vetorAux.push_back("C) 6");
+    vetorAux.push_back("D) 14");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///2
+    vetorAux.push_back("Qual alternativa nao contem um Hardware?");
+    vetorAux.push_back("A) Mouse");
+    vetorAux.push_back("B) Processador");
+    vetorAux.push_back("C) Chipset");
+    vetorAux.push_back("D) Debian");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///3
+    vetorAux.push_back("Eh o principal modulo do computador, onde estao conectados todos os perifericos");
+    vetorAux.push_back("A) CPU");
+    vetorAux.push_back("B) Placa mae");
+    vetorAux.push_back("C) Gabinete");
+    vetorAux.push_back("D) Entrada usb");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///4
+    vetorAux.push_back("Qual o valor em decimal do binario 00010101");
+    vetorAux.push_back("A) 21");
+    vetorAux.push_back("B) 8");
+    vetorAux.push_back("C) 20");
+    vetorAux.push_back("D) 14");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///5
+    vetorAux.push_back("Qual alternativa contem um Hardware?");
+    vetorAux.push_back("A) Windows");
+    vetorAux.push_back("B) Unix");
+    vetorAux.push_back("C) CPU");
+    vetorAux.push_back("D) Debian");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///6
+    vetorAux.push_back("O que significa USB?");
+    vetorAux.push_back("A) Universal Sata Bus");
+    vetorAux.push_back("B) Universal Serial Bus");
+    vetorAux.push_back("C) Universal Sata Branch");
+    vetorAux.push_back("D) Universal Serial Builder");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///medias
+    ///1
+    vetorAux.push_back("Em computacao, o que significa C.S.?");
+    vetorAux.push_back("A) Command Star");
+    vetorAux.push_back("B) Counter Strike");
+    vetorAux.push_back("C) Chip Set");
+    vetorAux.push_back("D) Computer Science");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///2
+    vetorAux.push_back("Na computacao, qual tecnologia substituiu a valvula?");
+    vetorAux.push_back("A) Capacitor");
+    vetorAux.push_back("B) Resistor");
+    vetorAux.push_back("C) Transistor");
+    vetorAux.push_back("D) Diodo");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///3
+    vetorAux.push_back("Dizer que a classe A estende a classe B eh o mesmo que dizer que:");
+    vetorAux.push_back("A) As classes sao irmas");
+    vetorAux.push_back("B) A eh superclasse de B");
+    vetorAux.push_back("C) B eh filha de A");
+    vetorAux.push_back("D) A eh filha de B");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///4
+    vetorAux.push_back("Em computacao, a sigla S.O. significa: ");
+    vetorAux.push_back("A) Sistema Ocioso");
+    vetorAux.push_back("B) Sistema Ondulatorio");
+    vetorAux.push_back("C) Sistema Ok");
+    vetorAux.push_back("D) Sistema Operacional");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///5
+    vetorAux.push_back("O que eh um ENIAC");
+    vetorAux.push_back("A) Um computador");
+    vetorAux.push_back("B) Uma configuracao");
+    vetorAux.push_back("C) Um congresso");
+    vetorAux.push_back("D) Um jogo");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///6
+    vetorAux.push_back("Por que um sistema operacional eh importante?");
+    vetorAux.push_back("A) Porque eh a unidade central de procedimentos do computador");
+    vetorAux.push_back("B) Porque ele organiza e administra os recursos do computador possibilitando seu uso");
+    vetorAux.push_back("C) Para assistir Netflix");
+    vetorAux.push_back("D) Para fazer trabalhos e salvar documentos com maior segurança");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///dificeis
+    ///1
+    vetorAux.push_back("Na ordem cronologica, marque a alternativa correta");
+    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
+    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///2
+    vetorAux.push_back("Qual o nome completo de Steven Jobs");
+    vetorAux.push_back("A) Steven Paul Jobs");
+    vetorAux.push_back("B) Steven Apple Jobs");
+    vetorAux.push_back("C) Steven Spielberg Jobs");
+    vetorAux.push_back("D) Steven Seagal Jobs");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///3
+    vetorAux.push_back("Pela ordem cronologica, marque a alternativa correta");
+    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
+    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
+    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///4
+    vetorAux.push_back("Se X, entao Y. Nao Y, logo: ");
+    vetorAux.push_back("A) Nao Y");
+    vetorAux.push_back("B) X");
+    vetorAux.push_back("C) Nao X");
+    vetorAux.push_back("D) Y");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///5
+    vetorAux.push_back("O que eh mais rapido? ");
+    vetorAux.push_back("A) HDD");
+    vetorAux.push_back("B) CD");
+    vetorAux.push_back("C) DVD");
+    vetorAux.push_back("D) SSD");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///6
+    vetorAux.push_back("Em OO existe uma medida do grau de dependencia entre objetos que eh: ");
+    vetorAux.push_back("A) Integracao");
+    vetorAux.push_back("B) Acoplamento");
+    vetorAux.push_back("C) Heranca");
+    vetorAux.push_back("D) Protocolo");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+}
 
 
 
@@ -644,7 +659,23 @@ int perguntaAleatoria(vector<vector<string>> &vector) {
 
 
 
+string escolherAlternativa() {
+    string nome_bot = nomeDoJogador;
+    transform(nome_bot.begin(), nome_bot.end(), nome_bot.begin(), ::tolower);
+    cout << "\nEscolha uma alternativa:" << endl;
+    if (nome_bot.compare("bot") == 0) {
+        resposta = letraAleatoria(alternativas);
+    } else {
+        cin >> resposta;
+    }
+    return resposta;
+}
 
+void imprimirPremios() {
+    for (int i = 0; i < premios.size(); ++i) {
+        cout << premios.at(i) << endl;
+    }
+}
 
 void pararJogo() {
 
