@@ -42,6 +42,14 @@ void prosseguir();
 int perguntaAleatoria(vector<vector<string>> &vector);
 void limparTela();
 
+void usarPulo();
+void usarCartas();
+void usarUniversitarios();
+void usarPlacas();
+void pararJogo();
+
+
+
 
 
 char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
@@ -55,13 +63,10 @@ int placas = 1;
 
 
 char letraAleatoria(char alt[]);
-void pararJogo();
 void perderJogo();
 void ganharJogo();
 void imprimirPremios();
 string escolherAlternativa();
-void pararJogo();
-void perderJogo();
 void atualizarPremio();
 
 int main() {
@@ -283,12 +288,42 @@ void preencherQuestoes() {
     questoesFaceisCC.push_back(vetorAux);
     vetorAux.clear();
 
-    //medias
-    vetorAux.push_back("Qual alternativa nao contem um Hardware?");
-    vetorAux.push_back("A) Mouse");
-    vetorAux.push_back("B) Processador");
-    vetorAux.push_back("C) Chipset");
+    vetorAux.push_back("Qual o valor em decimal do binario 00010101");
+    vetorAux.push_back("A) 21");
+    vetorAux.push_back("B) 8");
+    vetorAux.push_back("C) 20");
+    vetorAux.push_back("D) 14");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    vetorAux.push_back("Qual alternativa contem um Hardware?");
+    vetorAux.push_back("A) Windows");
+    vetorAux.push_back("B) Unix");
+    vetorAux.push_back("C) CPU");
     vetorAux.push_back("D) Debian");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    vetorAux.push_back("O que significa USB?");
+    vetorAux.push_back("A) Universal Sata Bus");
+    vetorAux.push_back("B) Universal Serial Bus");
+    vetorAux.push_back("C) Universal Sata Branch");
+    vetorAux.push_back("D) Universal Serial Builder");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesFaceisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    //medias
+    vetorAux.push_back("Em computacao, o que significa C.S.?");
+    vetorAux.push_back("A) Command Star");
+    vetorAux.push_back("B) Counter Strike");
+    vetorAux.push_back("C) Chip Set");
+    vetorAux.push_back("D) Computer Science");
     vetorAux.push_back("D");
     vetorAux.push_back("d");
     questoesMediasCC.push_back(vetorAux);
@@ -314,6 +349,36 @@ void preencherQuestoes() {
     questoesMediasCC.push_back(vetorAux);
     vetorAux.clear();
 
+    vetorAux.push_back("Em computacao, a sigla S.O. significa: ");
+    vetorAux.push_back("A) Sistema Ocioso");
+    vetorAux.push_back("B) Sistema Ondulatorio");
+    vetorAux.push_back("C) Sistema Ok");
+    vetorAux.push_back("D) Sistema Operacional");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    vetorAux.push_back("O que eh um ENIAC");
+    vetorAux.push_back("A) Um computador");
+    vetorAux.push_back("B) Uma configuracao");
+    vetorAux.push_back("C) Um congresso");
+    vetorAux.push_back("D) Um jogo");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    vetorAux.push_back("Por que um sistema operacional eh importante?");
+    vetorAux.push_back("A) Porque eh a unidade central de procedimentos do computador");
+    vetorAux.push_back("B) Porque ele organiza e administra os recursos do computador possibilitando seu uso");
+    vetorAux.push_back("C) Para assistir Netflix");
+    vetorAux.push_back("D) Para fazer trabalhos e salvar documentos com maior segurança");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesMediasCC.push_back(vetorAux);
+    vetorAux.clear();
+
     //dificeis
     vetorAux.push_back("Na ordem cronologica, marque a alternativa correta");
     vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
@@ -325,13 +390,13 @@ void preencherQuestoes() {
     questoesDificeisCC.push_back(vetorAux);
     vetorAux.clear();
 
-    vetorAux.push_back("Em ordem cronológica, marque a alternativa correta");
-    vetorAux.push_back("A) Abaco, Eniac, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("B) Eniac, Abaco, Chip, Transistor e Microprocessador");
-    vetorAux.push_back("C) Abaco, Eniac, Transistor, Chip e Microprocessador.");
-    vetorAux.push_back("D) Abaco, Eniac, Chip, Microprocessador e Transistor");
-    vetorAux.push_back("C");
-    vetorAux.push_back("c");
+    vetorAux.push_back("Qual o nome completo de Steven Jobs");
+    vetorAux.push_back("A) Steven Paul Jobs");
+    vetorAux.push_back("B) Steven Apple Jobs");
+    vetorAux.push_back("C) Steven Spielberg Jobs");
+    vetorAux.push_back("D) Steven Seagal Jobs");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
     questoesDificeisCC.push_back(vetorAux);
     vetorAux.clear();
 
@@ -344,6 +409,36 @@ void preencherQuestoes() {
     vetorAux.push_back("c");
     questoesDificeisCC.push_back(vetorAux);
     vetorAux.clear();
+
+    vetorAux.push_back("Se X, então Y. Não Y, logo: ");
+    vetorAux.push_back("A) Não Y");
+    vetorAux.push_back("B) X");
+    vetorAux.push_back("C) Não X");
+    vetorAux.push_back("D) Y");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    vetorAux.push_back("O que é mais rapido? ");
+    vetorAux.push_back("A) HDD");
+    vetorAux.push_back("B) CD");
+    vetorAux.push_back("C) DVD");
+    vetorAux.push_back("D) SSD");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
+
+    vetorAux.push_back("Em OO existe uma medida do grau de dependência entre objetos que é: ");
+    vetorAux.push_back("A) Integracao");
+    vetorAux.push_back("B) Acoplamento");
+    vetorAux.push_back("C) Heranca");
+    vetorAux.push_back("D) Protocolo");
+    vetorAux.push_back("B");
+    vetorAux.push_back("b");
+    questoesDificeisCC.push_back(vetorAux);
+    vetorAux.clear();
 }
 
 /**
@@ -354,13 +449,37 @@ void recebeRespostaDaQuestao(){
     do
     {
         cin >> resposta;
-        if((resposta.compare("a") != 0) && (resposta.compare("b") != 0 && (resposta.compare("c") != 0) && (resposta.compare("d") != 0))){
+
+        if( (resposta.compare("a") == 0) || (resposta.compare("b") == 0) || (resposta.compare("c") == 0) || (resposta.compare("d") == 0) ){
+            respostaInvalida = false;
+
+        }else if( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ){
+
+            respostaInvalida = false;
+
+           /** switch(resposta){
+                case "1":
+                    usarPulo();
+                    break;
+                case "2":
+                    usarCartas();
+                    break;
+                case "3":
+                    usarUniversitarios();
+                    break;
+                case "4":
+                    usarPlacas();
+                    break;
+                case "5":
+                    pararJogo();
+                    break; */
+        }else{
             respostaInvalida = true;
             cout << "Resposta  invalida. Digite a, b, c ou d: ";
-        }else{
-            respostaInvalida = false;
         }
-    }while(respostaInvalida);
+    }
+    while(respostaInvalida);
+
 }
 
 /**
@@ -378,6 +497,16 @@ void sorteiaPergunta(){
 void imprimirQuestao() {
     cout << "----------------------------------------------------------------" << endl;
     cout << "Prepare-se para a pergunta que vale R$ "<< premios.at(numeroDaRodadaAtual-1) << endl <<endl;
+    cout << "ACERTAR: "<< premios.at(numeroDaRodadaAtual-1);
+    if(numeroDaRodadaAtual == 1){
+            cout << "   PARAR: 0";
+        cout << "   ERRAR: 0" << endl <<endl;
+    }else{
+        cout << "   PARAR: " << premios.at(numeroDaRodadaAtual-2);
+        cout << "   ERRAR: " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
+    }
+
+
     if(numeroDaRodadaAtual <= 2){
         for(int i=0 ; i<5 ; ++i)
             cout << faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
@@ -388,7 +517,21 @@ void imprimirQuestao() {
         for(int i=0 ; i<5 ; ++i)
             cout << dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }
+    cout << "\n";
+    cout << "1) Pular" << endl;
+    cout << "2) Cartas" << endl;
+    cout << "3) Universitarios" << endl;
+    cout << "4) Placas" << endl;
+    cout << "5) Parar" << endl << endl;
+
+
     cout << "Resposta: ";
+}
+
+void verifica(){
+
+
+
 }
 
 string escolherAlternativa() {
@@ -422,28 +565,40 @@ bool alternativaCorreta(){
 }
 
 void imprimirResultado() {
-    if (alternativaCorreta()) {
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Parabens! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1) << endl << endl;
-        if(premios.size() == numeroDaRodadaAtual){ //entao respondeu a ultima rodada
-            cout << "$$$ Agora voce e o mais novo milionario do Brasil! $$$" << endl << endl;
+    if(continuar != false){
+
+        if (alternativaCorreta()) {
+            cout << "----------------------------------------------------------------" << endl;
+            cout << "Parabens! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1) << endl << endl;
+            if(premios.size() == numeroDaRodadaAtual){ //entao respondeu a ultima rodada
+                cout << "$$$ Agora voce e o mais novo milionario do Brasil! $$$" << endl << endl;
+                numeroDaRodadaAtual = 1;
+                prosseguir();
+            }else{
+                numeroDaRodadaAtual++;
+                cout << "Proxima pergunta..." << endl;
+            }
+        } else {
+            cout << "----------------------------------------------------------------" << endl;
+            cout << "Que pena, voce errou" << endl << endl;
+            cout << "A resposta certa era: " << letraRespostaCertaAtual << endl;
+            cout << "----------------------------------------------------------------" << endl;
+            if(numeroDaRodadaAtual != 1){
+                cout << "Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl;
+            }
             numeroDaRodadaAtual = 1;
             prosseguir();
-        }else{
-            numeroDaRodadaAtual++;
-            cout << "Proxima pergunta..." << endl;
         }
-    } else {
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Que pena, voce errou" << endl << endl;
-        cout << "A resposta certa era: " << letraRespostaCertaAtual << endl;
-        cout << "----------------------------------------------------------------" << endl;
-        if(numeroDaRodadaAtual != 1){
-            cout << "Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl;
-        }
+
+    }else{
+
         numeroDaRodadaAtual = 1;
         prosseguir();
+
     }
+
+
+
 }
 
 void prosseguir(){
@@ -469,13 +624,13 @@ void prosseguir(){
 			limparTela();
 			escolherCategoria();
 		}
+}
 
 int perguntaAleatoria(vector<vector<string>> &vector) {
     srand(time(nullptr));
     return rand() % vector.size();
 }
 
-}
 
 
 
@@ -492,7 +647,13 @@ int perguntaAleatoria(vector<vector<string>> &vector) {
 
 
 void pararJogo() {
-    cout << nomeDoJogador << ", voce decidiu parar o jogo e vai pra casa com R$" << premios.at(premioAtual) << "." << endl;
+
+    if(numeroDaRodadaAtual == 1){
+        cout << "Voce decidiu parar jogo." << endl;
+    }else{
+        cout << nomeDoJogador << ", voce decidiu parar o jogo e vai pra casa com R$" << premios.at(numeroDaRodadaAtual-2) << "." << endl;
+        continuar = false;
+    }
 }
 
 void perderJogo() {
