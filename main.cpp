@@ -7,16 +7,14 @@
 
 using namespace std;
 
+string ler;
+
 vector<vector<string>> questoesFaceisCC;
 vector<vector<string>> questoesMediasCC;
 vector<vector<string>> questoesDificeisCC;
 vector<vector<string>> questoesFaceisGeral;
 vector<vector<string>> questoesMediasGeral;
 vector<vector<string>> questoesDificeisGeral;
-
-vector<vector<string>> questoesFaceisCC;
-vector<vector<string>> questoesFaceisCC;
-vector<vector<string>> questoesFaceisCC;
 
 vector<int> premios;
 int numeroDaRodadaAtual = 1; //rodada 1 e 2(perguntas nivel facil), rodada 3 e 4(nivel medio), 5 e 6(nivel dificil)
@@ -40,63 +38,62 @@ int universitarios = 1;
 int placas = 1;
 
 void iniciarJogo();
-
-int perguntaAleatoria(vector<vector<string>> &vector);
-
-char letraAleatoria(char alt[]);
-
-void pararJogo();
-
-void perderJogo();
-
-void ganharJogo();
-
+void preencherQuestoes();
+void escolherCategoria();
 void preencherPremios();
 
-void imprimirPremios();
 
-void preencherQuestoesFaceisCG();
-
-void imprimirQuestao();
-
-string escolherAlternativa();
-
-bool alternativaCorreta();
-
-void imprimirResultado();
-
+int perguntaAleatoria(vector<vector<string>> &vector);
+char letraAleatoria(char alt[]);
 void pararJogo();
-
 void perderJogo();
-
+void ganharJogo();
+void imprimirPremios();
+void imprimirQuestao();
+string escolherAlternativa();
+bool alternativaCorreta();
+void imprimirResultado();
+void pararJogo();
+void perderJogo();
 void atualizarPremio();
 
 int main() {
-    //iniciarJogo();
+    iniciarJogo();
     //preencherQuestoesFaceisCG();
     //questoesFaceisCG.erase(questoesFaceisCG.begin()+ indice ); //remover elemento da posicao indice
-    questoesFaceisCG.clear();
 
-    cout << "teste " << endl;
-    cout << "teste " << questoesFaceisCG.size() << endl;
-    cout << "teste " << questoesFaceisCG.size() << endl;
 
     return 0;
 }
 
 void iniciarJogo() {
-    cout << "Bem vindo(a) ao SHOW DO MILHAO!" << endl << endl;
-    cout << "Voce respondera a perguntas do nivel facil, medio e dificil." << endl;
+    cout << "___________________________________________________________________" << endl;
+    cout << "_____________________________ S H O W _____________________________" << endl;
+    cout << "_______________________________ D O _______________________________" << endl;
+    cout << "___________________________ M I L H A O ___________________________" << endl;
+    cout << "___________________________________________________________________" << endl;
     cout << "Teste seus conhecimentos e concorra ao premio maximo de R$ 1 milhao." << endl << endl;
-    cout << "Vamos comecar. Diga-me o seu nome: ";
+    cout << "Diga-me o seu nome: ";
     cin >> nomeDoJogador;
-
+    preencherQuestoes();
+    escolherCategoria();
     preencherPremios();
-    preencherQuestoesFaceisCG();
-    // imprimirPremios();
-    imprimirQuestao();
-    escolherAlternativa();
-    imprimirResultado();
+    cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
+}
+
+void escolherCategoria(){
+    cout << "\nQual categoria de questoes voce deseja?" << endl;
+    cout << "1) Computacao" << endl;
+    cout << "2) Conhecimentos Gerais" << endl;
+    cout << "\nDigite o numero da categoria: ";
+
+    do
+    {
+        cin >> resposta;
+        if((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){
+            cout << "Categoria invalida. Digite 1 ou 2: ";
+        }
+    } while((resposta.compare("1") != 0) && (resposta.compare("2") != 0));
 }
 
 void preencherPremios() {
@@ -187,8 +184,8 @@ void preencherQuestoes() {
     vetorAux.push_back("B) Filosofia");
     vetorAux.push_back("C) Matematica");
     vetorAux.push_back("D) Astronomia");
-    vetorAux.push_back("A")
-    vetorAux.push_back("a")
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
     questoesMediasGeral.push_back(vetorAux);
     vetorAux.clear();
 
@@ -231,7 +228,7 @@ void preencherQuestoes() {
     vetorAux.push_back("C) 6");
     vetorAux.push_back("D) 14");
     vetorAux.push_back("A");
-    vetorAux.push_back"a");
+    vetorAux.push_back("a");
     questoesFaceisCC.push_back(vetorAux);
     vetorAux.clear();
 
@@ -319,11 +316,8 @@ void preencherQuestoes() {
 }
 
 void imprimirQuestao() {
-    cout << "\nPergunta valendo: R$" << premios.at(premioAtual) << endl;
-    indiceAleatorio = perguntaAleatoria(questoesFaceisCG);
-    for (int i = 0; i < questoesFaceisCG.at(indiceAleatorio).size() - 2; ++i) {
-        cout << questoesFaceisCG.at(indiceAleatorio).at(i) << endl;
-    }
+
+
 }
 
 string escolherAlternativa() {
@@ -340,14 +334,7 @@ string escolherAlternativa() {
 }
 
 bool alternativaCorreta() {
-    if (questoesFaceisCG.at(indiceAleatorio).at(5).compare(resposta) == 0 ||
-        questoesFaceisCG.at(indiceAleatorio).at(6).compare(resposta) == 0) {
-        acertou = true;
-        return true;
-    } else {
-        acertou = false;
-        return false;
-    }
+
 }
 
 void imprimirResultado() {
