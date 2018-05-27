@@ -28,6 +28,13 @@ string nomeDoJogador;
 string resposta;
 bool continuar = true;
 
+int qtdCartas = 3;
+int qtdUniversitarios = 3;
+int qtdPlacas = 3;
+bool usouCartas;
+bool usouUniversitarios;
+bool usousPlacas;
+
 ///Metodos
 void iniciarJogo();
 void preencherQuestoes();
@@ -56,10 +63,8 @@ char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
 bool acertou;
 int indiceAleatorio;
 int premioAtual = 0;
+
 int pulos = 3;
-int cartas = 1;
-int universitarios = 1;
-int placas = 1;
 
 char letraAleatoria(char alt[]);
 void perderJogo();
@@ -75,8 +80,8 @@ int main() {
         sorteiaPergunta();
         imprimirQuestao();
         recebeRespostaDaQuestao();
-        limparTela();
-        imprimirResultado();
+        //limparTela();
+        //imprimirResultado();
     }while(continuar);
     return 0;
 }
@@ -104,33 +109,26 @@ void iniciarJogo() {
     cabecalho();
     cout << "Diga-me o seu nome: ";
     cin >> nomeDoJogador;
-    //cout << "----------------------------------------------------------------" << endl;
-    //cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
+    limparTela();
+    cabecalho();
     escolherCategoria();
 }
 
 void escolherCategoria(){
-    limparTela();
-    if(numeroDaRodadaAtual == 1){
-        cabecalho();
-    }
     cout << "Qual categoria de questoes voce deseja?" << endl;
     cout << "1) Computacao" << endl;
     cout << "2) Conhecimentos Gerais" << endl;
     cout << "\nDigite o numero da categoria: ";
-
-    do
-    {
+    cin >> resposta;
+    while((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){
+        limparTela();
+        cabecalho();
+        cout << "Qual categoria de questoes voce deseja?" << endl;
+        cout << "1) Computacao" << endl;
+        cout << "2) Conhecimentos Gerais" << endl;
+        cout << "\nCategoria invalida. Digite 1 ou 2: ";
         cin >> resposta;
-        if((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){ /// Se resposta nao for 1 e nao for 0, entra no laco
-            limparTela();
-            cabecalho();
-            cout << "Qual categoria de questoes voce deseja?" << endl;
-            cout << "1) Computacao" << endl;
-            cout << "2) Conhecimentos Gerais" << endl;
-            cout << "\nCategoria invalida. Digite 1 ou 2: ";
-        }
-    } while((resposta.compare("1") != 0) && (resposta.compare("2") != 0));
+    }
 
     if(resposta.compare("1") == 0){
         faceisAux = questoesFaceisCC;
@@ -144,6 +142,61 @@ void escolherCategoria(){
     limparTela();
 }
 
+
+
+/// sorteia uma pergunta aleatoria retornando o indice da pergunta
+void sorteiaPergunta(){
+    if(numeroDaRodadaAtual <= 2)
+        indiceDaPerguntaSorteada = perguntaAleatoria(faceisAux);
+    else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4)
+        indiceDaPerguntaSorteada = perguntaAleatoria(mediasAux);
+    else
+        indiceDaPerguntaSorteada = perguntaAleatoria(dificeisAux);
+}
+
+void imprimirQuestao() {
+    if(numeroDaRodadaAtual == 1){
+        cout << "----------------------------------------------------------------" << endl;
+        cout << "Bem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
+    }
+    cout << "Prepare-se para a pergunta que vale R$ " << premios.at(numeroDaRodadaAtual-1) << endl;
+    cout << "----------------------------------------------------------------" << endl << endl;
+
+    cout << "ACERTAR: R$ "<< premios.at(numeroDaRodadaAtual-1);
+    if(numeroDaRodadaAtual == 1){
+        cout << "   PARAR: 0"; cout << "   ERRAR: 0" << endl <<endl;
+    }else{
+        cout << "   PARAR: R$ " << premios.at(numeroDaRodadaAtual-2); cout << "   ERRAR: R$ " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
+    }
+
+    if(numeroDaRodadaAtual <= 2){
+        for(int i = 0 ; i < 5 ; ++i)
+            cout << faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
+        for(int i = 0 ; i < 5 ; ++i)
+            cout << mediasAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+    }else{
+        for(int i = 0 ; i < 5 ; ++i)
+            cout << dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+    }
+
+    /// if e else das opcoesssssss !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //
+    ///
+    ///
+    /// !!!!!!!!!!!!!!!!!!
+
+
+    cout << "\n";
+    cout << "1- Pular" << endl;
+    cout << "2- Cartas" << endl;
+    cout << "3- Universitarios" << endl;
+    cout << "4- Placas" << endl;
+    cout << "5- Parar" << endl << endl;
+
+    cout << "Resposta: ";
+}
+
 /// recebe a resposta da alternativa e verifica se a letra informada eh valida
 void recebeRespostaDaQuestao(){
     bool respostaInvalida;
@@ -153,11 +206,13 @@ void recebeRespostaDaQuestao(){
 
         if( (resposta.compare("a") == 0) || (resposta.compare("b") == 0) || (resposta.compare("c") == 0) || (resposta.compare("d") == 0) ){
             respostaInvalida = false;
+            limparTela();
+            imprimirResultado();
 
         }else if ( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ) {
+           // respostaInvalida = false;
+            limparTela();
             /**
-            respostaInvalida = false;
-
                 switch(resposta)
                 {
                     case "1":
@@ -176,59 +231,15 @@ void recebeRespostaDaQuestao(){
                         pararJogo();
                         break;
             }*/
+            //imprimirResultado();
         }else{
             respostaInvalida = true;
-            cout << "Resposta  invalida. Digite a, b, c ou d: ";
+
+            cout << "Resposta  invalida. Digite novamente: ";
+
         }
     }
     while(respostaInvalida);
-
-}
-
-
-/// sorteia uma pergunta aleatoria retornando o indice da pergunta
-void sorteiaPergunta(){
-    if(numeroDaRodadaAtual <= 2)
-        indiceDaPerguntaSorteada = perguntaAleatoria(faceisAux);
-    else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4)
-        indiceDaPerguntaSorteada = perguntaAleatoria(mediasAux);
-    else
-        indiceDaPerguntaSorteada = perguntaAleatoria(dificeisAux);
-}
-
-void imprimirQuestao() {
-    if(numeroDaRodadaAtual == 1){
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "\nBem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
-    }
-    cout << "----------------------------------------------------------------" << endl;
-    cout << "Prepare-se para a pergunta que vale R$ " << premios.at(numeroDaRodadaAtual-1) << endl <<endl;
-
-    cout << "ACERTAR: "<< premios.at(numeroDaRodadaAtual-1);
-    if(numeroDaRodadaAtual == 1){
-        cout << "   PARAR: 0"; cout << "   ERRAR: 0" << endl <<endl;
-    }else{
-        cout << "   PARAR: " << premios.at(numeroDaRodadaAtual-2); cout << "   ERRAR: " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
-    }
-
-    if(numeroDaRodadaAtual <= 2){
-        for(int i = 0 ; i < 5 ; ++i)
-            cout << faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
-    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
-        for(int i = 0 ; i < 5 ; ++i)
-            cout << mediasAux.at(indiceDaPerguntaSorteada).at(i) << endl;
-    }else{
-        for(int i = 0 ; i < 5 ; ++i)
-            cout << dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
-    }
-    cout << "\n";
-    cout << "1) Pular" << endl;
-    cout << "2) Cartas" << endl;
-    cout << "3) Universitarios" << endl;
-    cout << "4) Placas" << endl;
-    cout << "5) Parar" << endl << endl;
-
-    cout << "Resposta: ";
 }
 
 bool alternativaCorreta(){
@@ -261,13 +272,12 @@ void imprimirResultado() {
             cout << "Parabens! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1) << endl << endl;
 
             if(premios.size() == numeroDaRodadaAtual){ ///entao respondeu a ultima rodada
-                cout << "$$$ Agora voce e o mais novo milionario do Brasil! $$$" << endl;
+                cout << "$$$ Agora voce eh o mais novo milionario do Brasil! $$$" << endl;
                 cout << "----------------------------------------------------------------" << endl << endl;
                 numeroDaRodadaAtual = 1;
                 prosseguir();
             }else{
                 numeroDaRodadaAtual++;
-                cout << "Proxima pergunta..." << endl;
             }
         } else { ///errou a questao
             cout << "----------------------------------------------------------------" << endl;
@@ -316,6 +326,33 @@ void prosseguir(){
 int perguntaAleatoria(vector<vector<string>> &vector) {
     srand(time(nullptr));
     return rand() % vector.size();
+}
+
+void usarPulo(){
+    if(numeroDaRodadaAtual <= 2){ ///questoes faceis
+        faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada);
+
+    }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
+        mediasAux.erase(mediasAux.begin() + indiceDaPerguntaSorteada);
+
+    }else{ ///questoes dificeis
+        dificeisAux.erase(dificeisAux.begin() + indiceDaPerguntaSorteada);
+    }
+}
+
+void pararJogo(){
+    cout << "----------------------------------------------------------------" << endl << endl;
+    if(numeroDaRodadaAtual <= 3){
+        cout << "Mas ja? Tudo bem..." << endl << endl;
+    }else{
+        cout << "Tudo bem, as vezes eh melhor nao arriscar..." << endl << endl;
+    }
+    cout << "----------------------------------------------------------------" << endl;
+    if(numeroDaRodadaAtual != 1){
+        cout << "Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl << endl;
+    }
+    numeroDaRodadaAtual = 1;
+    prosseguir();
 }
 
 void preencherPremios() {
@@ -674,16 +711,6 @@ string escolherAlternativa() {
 void imprimirPremios() {
     for (int i = 0; i < premios.size(); ++i) {
         cout << premios.at(i) << endl;
-    }
-}
-
-void pararJogo() {
-
-    if(numeroDaRodadaAtual == 1){
-        cout << "Voce decidiu parar jogo." << endl;
-    }else{
-        cout << nomeDoJogador << ", voce decidiu parar o jogo e vai pra casa com R$" << premios.at(numeroDaRodadaAtual-2) << "." << endl;
-        continuar = false;
     }
 }
 
