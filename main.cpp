@@ -35,7 +35,7 @@ bool usouCartas;
 bool usouUniversitarios;
 bool usouPlacas;
 int numeroDaCarta;
-int n = 0;
+int alternativaRemovida = 0;
 
 ///Metodos
 void iniciarJogo();
@@ -43,8 +43,8 @@ void preencherQuestoes();
 void escolherCategoria();
 void preencherPremios();
 void recebeRespostaDaQuestao();
-void sorteiaPergunta();
-void imprimirPergunta();
+void sorteiaQuestao();
+void imprimirQuestao();
 bool alternativaCorreta();
 void imprimirResultado();
 void prosseguir();
@@ -52,7 +52,7 @@ int geraIndiceAleatorio(int qtdDeIndices);
 void cabecalho();
 void limparTela();
 void usarPulo();
-void usarCartas();///falta implementar
+void usarCartas();
 void usarUniversitarios();///falta implementar
 void usarPlacas();///falta implementar
 void pararJogo();
@@ -70,9 +70,7 @@ char alternativas[5] = {'a', 'b', 'c', 'd', '\0'};
 bool acertou;
 int indiceAleatorio;
 int premioAtual = 0;
-
 int pulos = 3;
-
 char letraAleatoria(char alt[]);
 void perderJogo();
 void ganharJogo();
@@ -84,7 +82,7 @@ int main() {
     iniciarJogo();
     do
     {
-        imprimirPergunta();
+        imprimirQuestao();
         recebeRespostaDaQuestao();
 
     }while(continuar);
@@ -99,6 +97,7 @@ void limparTela() {
     std::system("clear");
 #endif
 }
+
 void cabecalho(){
     cout << "-------------------------------------------------------------------" << endl;
     cout << "_____________________________ S H O W _____________________________" << endl;
@@ -117,7 +116,7 @@ void iniciarJogo() {
     limparTela();
     cabecalho();
     escolherCategoria();
-    sorteiaPergunta();
+    sorteiaQuestao();
 }
 
 void escolherCategoria(){
@@ -162,15 +161,14 @@ int indiceRespostaCertaAtual(){
 
 
 /// sorteia uma pergunta aleatoria retornando o indice da pergunta
-void sorteiaPergunta(){
+void sorteiaQuestao(){
     if(numeroDaRodadaAtual <= 2)
         indiceDaPerguntaSorteada = geraIndiceAleatorio(faceisAux.size());
     else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4)
         indiceDaPerguntaSorteada = geraIndiceAleatorio(mediasAux.size());
     else
         indiceDaPerguntaSorteada = geraIndiceAleatorio(dificeisAux.size());
-
-    //cout << "SORTEOU, e o INDICE FOI: " << indiceDaPerguntaSorteada <<endl;
+    //cout << "SORTEOU, e o INDICE FOI: " << indiceDaPerguntaSorteada <<endl; //apenas para testes
     usouCartas = false;
     usouPlacas = false;
     usouUniversitarios = false;
@@ -202,9 +200,9 @@ void removeAlternativasDasPlacas(vector<vector<string>> &vector){
     for(int i = 0 ; i < numeroDaCarta ; i++){
         do
         {
-            n = geraIndiceAleatorio(4) + 1;
-        }while(n == indiceRespostaCertaAtual() || vector[indiceDaPerguntaSorteada][n].compare("- - - - -") == 0);
-        vector[indiceDaPerguntaSorteada][n] = "- - - - -";
+            alternativaRemovida = geraIndiceAleatorio(4) + 1;
+        }while(alternativaRemovida == indiceRespostaCertaAtual() || vector[indiceDaPerguntaSorteada][alternativaRemovida].compare("- - - - -") == 0);
+        vector[indiceDaPerguntaSorteada][alternativaRemovida] = "- - - - -";
     }
 }
 
@@ -224,7 +222,7 @@ void perguntaDepoisDasPlacas(){
     tabelaDePremios();
 
     if(numeroDaRodadaAtual <= 2){
-            /// AQUII imprimir so a questao
+            /// lembra de alterar aqui!
     ///if {
         removeAlternativasDasPlacas(faceisAux);
     /// }
@@ -243,7 +241,7 @@ void perguntaDepoisDasPlacas(){
     }
 }
 
-void imprimirPergunta() {
+void imprimirQuestao() {
     if(usouCartas){
         perguntaDepoisDasPlacas();
     }else{
@@ -258,13 +256,12 @@ void menuAjudas(){
     if(usouCartas || usouPlacas || usouUniversitarios){
         cout << "5- Parar" << endl << endl;
     }else{
-        cout << "1- Pular "<< qtdPulos << "/3" << endl;
-        cout << "2- Cartas" << endl;
-        cout << "3- Placas" << endl;
-        cout << "4- Universitarios" << endl;
-        cout << "5- Parar" << endl << endl;
+        cout << "1- Pular " << qtdPulos << "/3" << endl;
+        cout << "2- Cartas " << qtdCartas << "/3" << endl;
+        cout << "3- Placas " << endl;
+        cout << "4- Universitarios " << endl;
+        cout << "5- Parar " << endl << endl;
     }
-
 }
 
 /// recebe a resposta da alternativa e verifica se a letra informada eh valida
@@ -284,7 +281,6 @@ void recebeRespostaDaQuestao(){
         }else if ( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ) {
             limparTela();
             int valor = atoi(resposta.c_str()); ///converter string para inteiro
-
                 switch(valor)
                 {
                     case 1:
@@ -311,12 +307,9 @@ void recebeRespostaDaQuestao(){
                         pararJogo();
                         break;
             }
-
         }else{
             respostaInvalida = true;
-
             cout << "Resposta  invalida. Digite novamente: ";
-
         }
     }
     while(respostaInvalida);
@@ -349,8 +342,10 @@ void imprimirResultado() {
                 prosseguir();
         }else{
             usouCartas = false;
+            usouPlacas = false;
+            usouUniversitarios = false;
             numeroDaRodadaAtual++;
-            sorteiaPergunta();
+            sorteiaQuestao();
         }
     } else { ///errou a questao
         cout << "----------------------------------------------------------------" << endl;
@@ -390,9 +385,11 @@ void prosseguir(){
             qtdPlacas = 3;
             qtdPulos = 3;
             usouCartas = false;
+            usouPlacas = false;
+            usouUniversitarios = false;
 			limparTela();
 			escolherCategoria();
-			sorteiaPergunta();
+			sorteiaQuestao();
 		}
 }
 
@@ -419,40 +416,47 @@ void usarPulo(){
         }else{ ///questoes dificeis
             dificeisAux.erase(dificeisAux.begin() + indiceDaPerguntaSorteada);
         }
-        sorteiaPergunta();
+        sorteiaQuestao();
     }
 }
 
 void usarCartas(){
-    if(!usouCartas){
+    if(qtdCartas == 0){
+        limparTela();
         cout << "----------------------------------------------------------------" << endl;
-        cout << "Escolha a carta! Digite 1, 2 ou 3 " << endl;
-        cout << " ___    ___    ___" <<endl;
-        cout << "|###|  |###|  |###|" <<endl;
-        cout << "|###|  |###|  |###|" <<endl;
-        cout << "|###|  |###|  |###|" <<endl <<endl;
-        cout << "Carta: ";
-        usouCartas = true;
-        cin >> resposta;
-        numeroDaCarta = (geraIndiceAleatorio(2) + 1);
-    }
-    limparTela();
-    cout << "----------------------------------------------------------------" << endl;
-    if(resposta.compare("1") == 0){
-        cout << " ___    ___    ___" <<endl;
-        cout << "|   |  |###|  |###|" <<endl;
-        cout << "| " << numeroDaCarta << " |  |###|  |###|" <<endl;
-        cout << "|___|  |###|  |###|" <<endl << endl;
-    }else if (resposta.compare("2") == 0){
-        cout << " ___    ___    ___" <<endl;
-        cout << "|###|  |   |  |###|" <<endl;
-        cout << "|###|  | " << numeroDaCarta << " |  |###|" <<endl;
-        cout << "|###|  |___|  |###|" <<endl << endl;
-    }else if (resposta.compare("3") == 0){
-        cout << " ___    ___    ___" <<endl;
-        cout << "|###|  |###|  |   |" <<endl;
-        cout << "|###|  |###|  | " << numeroDaCarta << " |" <<endl;
-        cout << "|###|  |###|  |___|" <<endl << endl;
+        cout << "VOCE NAO PODE MAIS USAR AS CARTAS, APENAS RESPONDER OU ESCOLHER OUTRA AJUDA. " << endl << endl;
+    }else{
+        if(!usouCartas){
+            qtdCartas--;
+            cout << "----------------------------------------------------------------" << endl;
+            cout << "Escolha a carta! Digite 1, 2 ou 3 " << endl;
+            cout << " ___    ___    ___" <<endl;
+            cout << "|###|  |###|  |###|" <<endl;
+            cout << "|###|  |###|  |###|" <<endl;
+            cout << "|###|  |###|  |###|" <<endl <<endl;
+            cout << "Carta: ";
+            usouCartas = true;
+            cin >> resposta;
+            numeroDaCarta = (geraIndiceAleatorio(2) + 1);
+        }
+        limparTela();
+        cout << "----------------------------------------------------------------" << endl;
+        if(resposta.compare("1") == 0){
+            cout << " ___    ___    ___" <<endl;
+            cout << "|   |  |###|  |###|" <<endl;
+            cout << "| " << numeroDaCarta << " |  |###|  |###|" <<endl;
+            cout << "|___|  |###|  |###|" <<endl << endl;
+        }else if (resposta.compare("2") == 0){
+            cout << " ___    ___    ___" <<endl;
+            cout << "|###|  |   |  |###|" <<endl;
+            cout << "|###|  | " << numeroDaCarta << " |  |###|" <<endl;
+            cout << "|###|  |___|  |###|" <<endl << endl;
+        }else if (resposta.compare("3") == 0){
+            cout << " ___    ___    ___" <<endl;
+            cout << "|###|  |###|  |   |" <<endl;
+            cout << "|###|  |###|  | " << numeroDaCarta << " |" <<endl;
+            cout << "|###|  |###|  |___|" <<endl << endl;
+        }
     }
 }
 
