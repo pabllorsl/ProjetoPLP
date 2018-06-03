@@ -40,6 +40,7 @@ int alternativaRemovida = 0;
 int variavelAux;
 string cartaEscolhida;
 string respostaCertaAtual = "";
+bool jaUsouAjuda = false;
 
 ///Metodos
 void iniciarJogo();
@@ -65,7 +66,7 @@ void questao();
 int indiceRespostaCertaAtual();
 void removeAlternativasDasPlacas(vector<vector<string>> &vector);
 void tabelaDePremios();
-bool jaUsouAjuda = false;
+void menuCategorias();
 
 
 
@@ -119,23 +120,25 @@ void iniciarJogo() {
     cout << "Diga-me o seu nome: ";
     cin >> nomeDoJogador;
     limparTela();
-    cabecalho();
     escolherCategoria();
     sorteiaQuestao();
 }
 
-void escolherCategoria(){
+void menuCategorias(){
     cout << "Qual categoria de questoes voce deseja?" << endl;
     cout << "1- Computacao" << endl;
     cout << "2- Conhecimentos Gerais" << endl;
+}
+
+void escolherCategoria(){
+    cabecalho();
+    menuCategorias();
     cout << "\nDigite o numero da categoria: ";
     cin >> resposta;
     while((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){
         limparTela();
         cabecalho();
-        cout << "Qual categoria de questoes voce deseja?" << endl;
-        cout << "1- Computacao" << endl;
-        cout << "2- Conhecimentos Gerais" << endl;
+        menuCategorias();
         cout << "\nCategoria invalida. Digite 1 ou 2: ";
         cin >> resposta;
     }
@@ -186,7 +189,7 @@ void sorteiaQuestao(){
     usouCartas = false;
     usouPlacas = false;
     usouUniversitarios = false;
-    usouPulo = false;
+    //usouPulo = false;
 }
 
 void questao(){
@@ -248,10 +251,8 @@ void questaoDepoisDasCartas(){
 }
 
 void imprimirQuestao() {
-
     questao();
     menuAjudas();
-    cout << "Resposta: ";
 }
 
 void menuAjudas(){
@@ -270,6 +271,7 @@ void menuAjudas(){
 /// recebe a resposta da alternativa e verifica se a letra informada eh valida
 void recebeRespostaDaQuestao(){
     bool respostaInvalida;
+    cout << "Resposta: ";
     do
     {
         cin >> resposta;
@@ -277,8 +279,8 @@ void recebeRespostaDaQuestao(){
             respostaInvalida = false;
             limparTela();
             imprimirResultado();
+
         }else if((resposta.compare("5") != 0) && jaUsouAjuda) {
-            //limparTela();
             if(usouCartas)
                 usarCartas();
             else if(usouPlacas)
@@ -289,40 +291,46 @@ void recebeRespostaDaQuestao(){
            // cout << "VOCE JA USOU UMA AJUDA, AGORA SO RESTA RESPONDER OU PARAR." << endl << endl;
         }
         else if ( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ) {
-            //limparTela();
+            respostaInvalida = false;
             int valor = atoi(resposta.c_str()); ///converter string para inteiro
-                switch(valor)
-                {
-                    case 1:
-                        usarPulo();
-                        break;
+            switch(valor)
+            {
+                case 1:
+                    usarPulo();
+                    break;
 
-                    case 2:
-                        usarCartas();
-                        break;
+                case 2:
+                    usarCartas();
+                    break;
 
-                    case 3:
-                        cout << "----------------------------------------------------------------" << endl;
-                        cout << "Voce usou as placas... " << endl << endl;
-                        usarPlacas();
-                        break;
+                case 3:
+                    cout << "----------------------------------------------------------------" << endl;
+                    cout << "Voce usou as placas... " << endl << endl;
+                    usarPlacas();
+                    break;
 
-                    case 4:
-                        cout << "----------------------------------------------------------------" << endl;
-                        cout << "Voce usou os universitarios... " << endl << endl;
-                        usarUniversitarios();
-                        break;
+                case 4:
+                    cout << "----------------------------------------------------------------" << endl;
+                    cout << "Voce usou os universitarios... " << endl << endl;
+                    usarUniversitarios();
+                    break;
 
-                    case 5:
-                        pararJogo();
-                        break;
+                case 5:
+                    pararJogo();
+                    break;
             }
         }else{
             respostaInvalida = true;
-            cout << "Resposta  invalida. Digite novamente: ";
+            limparTela();
+            if(numeroDaRodadaAtual != 1 || usouPulo){
+                cout << "----------------------------------------------------------------" << endl;
+                cout << "ESSA OPCAO NAO EXISTE... " << endl << endl;
+            }
+            imprimirQuestao();
+            cout << "Digite uma resposta valida: ";
+            //cout << "Resposta  invalida. Digite novamente: ";
         }
-    }
-    while(respostaInvalida);
+    }while(respostaInvalida);
 }
 
 bool alternativaCorreta(){
@@ -359,6 +367,7 @@ void imprimirResultado() {
             usouPlacas = false;
             usouUniversitarios = false;
             jaUsouAjuda = false;
+            usouPulo = false;
             numeroDaRodadaAtual++;
             sorteiaQuestao();
         }
@@ -388,13 +397,17 @@ void prosseguir(){
 				respostaInvalida = false;
 			}else {
 				respostaInvalida = true;
-				cout << "Deseja jogar outra partida? Digite s ou n: ";
+				limparTela();
+				cout << "----------------------------------------------------------------" << endl << endl;
+                cout << "OPS... " << endl << endl;
+                cout << "----------------------------------------------------------------" << endl << endl << endl;
+				cout << "Deseja jogar outra partida? Digite s ou n ";
 			}
 		}while(respostaInvalida);
 
 		if (continuar) {
             numeroDaRodadaAtual = 1;
-			preencherQuestoes();
+			//preencherQuestoes();
 			qtdCartas = 1;
             qtdUniversitarios = 1;
             qtdPlacas = 1;
@@ -403,6 +416,7 @@ void prosseguir(){
             usouPlacas = false;
             usouUniversitarios = false;
             jaUsouAjuda = false;
+            usouPulo = false;
 			limparTela();
 			escolherCategoria();
 			sorteiaQuestao();
@@ -421,6 +435,7 @@ void usarPulo(){
             cout << "----------------------------------------------------------------" << endl;
             cout << "VOCE NAO PODE MAIS PULAR, APENAS RESPONDER OU ESCOLHER UMA AJUDA. " << endl << endl;
         }else{
+            usouPulo = true;
             cout << "----------------------------------------------------------------" << endl;
             cout << "Voce pulou, ai vai a proxima pergunta... " << endl << endl;
             qtdPulos--;
@@ -531,6 +546,7 @@ void usarUniversitarios(){
 }
 
 void pararJogo(){
+    limparTela();
     cout << "----------------------------------------------------------------" << endl << endl;
     if(numeroDaRodadaAtual <= 3){
         cout << "Mas ja? Tudo bem..." << endl << endl;
@@ -541,7 +557,6 @@ void pararJogo(){
     if(numeroDaRodadaAtual != 1){
         cout << "Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl << endl;
     }
-    numeroDaRodadaAtual = 1;
     prosseguir();
 }
 
@@ -557,12 +572,12 @@ void preencherPremios() {
 void preencherQuestoes() {
     /// eh preciso limpar pra garantir que vao estar zerados antes de preenche-los.
     /// pois no final de cada rodada sobram elementos(questoes) dentro da lista
-    questoesFaceisCC.clear();
-    questoesMediasCC.clear();
-    questoesDificeisCC.clear();
-    questoesFaceisGeral.clear();
-    questoesMediasGeral.clear();
-    questoesDificeisGeral.clear();
+    //questoesFaceisCC.clear();
+    //questoesMediasCC.clear();
+    //questoesDificeisCC.clear();
+    //questoesFaceisGeral.clear();
+    //questoesMediasGeral.clear();
+    //questoesDificeisGeral.clear();
 
     /// vetor auxiliar que sera adicionado ao vetores principais
     /// depois da insercao esse vetor eh zerado e novas questoes sao atribuidas a ele
