@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -241,7 +243,17 @@ void recebeRespostaDaQuestao() {
     bool respostaInvalida;
     cout << " Resposta: ";
     do {
-        cin >> resposta;
+        if(nomeDoJogador.compare("bot") == 0) {
+            resposta = letraAleatoria(alternativas);
+        } else if(nomeDoJogador.compare("god") == 0) {
+            Sleep(1300);
+            resposta = questoesNivelAtual.at(indiceDaPerguntaSorteada).at(6);
+        } else {
+            cin >> resposta;
+        }
+
+        transform(resposta.begin(), resposta.end(), resposta.begin(), ::tolower);
+
         if ((resposta.compare("a") == 0) || (resposta.compare("b") == 0) || (resposta.compare("c") == 0) ||
             (resposta.compare("d") == 0)) {
             respostaInvalida = false;
@@ -325,7 +337,11 @@ void imprimirResultado() {
         if (numeroDaRodadaAtual == 1) {
             cout << endl;
         }
+
+        transform(resposta.begin(), resposta.end(), resposta.begin(), ::toupper);
+        cout << " Sua resposta foi: " << resposta << ")" << endl;
         cout << " A resposta certa era a alternativa: " << respostaCertaAtual << endl;
+
         if (numeroDaRodadaAtual != 1) {
             if (tamPremios == numeroDaRodadaAtual) {
                 cout << " Infelizmente voce perdeu tudo..." << endl;
@@ -979,17 +995,6 @@ void preencherQuestoes() {
     vetorAux.clear();
 }
 
-string escolherAlternativa() {
-    string nome_bot = nomeDoJogador;
-    transform(nome_bot.begin(), nome_bot.end(), nome_bot.begin(), ::tolower);
-    cout << "\nEscolha uma alternativa:" << endl;
-    if (nome_bot.compare("bot") == 0) {
-        resposta = letraAleatoria(alternativas);
-    } else {
-        cin >> resposta;
-    }
-    return resposta;
-}
 
 // Essa funcao eh usada para o bot
 char letraAleatoria(char alt[]) {
