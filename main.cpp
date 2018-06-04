@@ -106,7 +106,6 @@ void limparTela() {
 void cabecalho(){
 
     cout << ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ." << endl;
-    //cout << ". _____________________________________________________________________ ." << endl;
     cout << ". ______________________________ S H O W ______________________________ ." << endl;
     cout << ". ________________________________ D O ________________________________ ." << endl;
     cout << ". ____________________________ M I L H A O ____________________________ ." << endl;
@@ -390,18 +389,18 @@ int geraIndiceAleatorio(int qtdDeIndices){
 }
 
 void usarPulo(){
-        limparTela();
-        if(qtdPulos == 0){
-            cout << "........................................................................." << endl;
-            cout << " VOCE NAO PODE MAIS PULAR, APENAS RESPONDER OU ESCOLHER UMA AJUDA. " << endl << endl;
-        }else{
-            usouPulo = true;
-            cout << "........................................................................." << endl;
-            cout << " Voce pulou, ai vai a proxima pergunta... " << endl << endl;
-            qtdPulos--;
-            questoesNivelAtual.erase(questoesNivelAtual.begin() + indiceDaPerguntaSorteada);
-            sorteiaQuestao();
-        }
+    limparTela();
+    if(qtdPulos == 0){
+        cout << "........................................................................." << endl;
+        cout << " VOCE NAO PODE MAIS PULAR, APENAS RESPONDER OU ESCOLHER UMA AJUDA. " << endl << endl;
+    }else{
+        usouPulo = true;
+        cout << "........................................................................." << endl;
+        cout << " Voce pulou, ai vai a proxima pergunta... " << endl << endl;
+        qtdPulos--;
+        questoesNivelAtual.erase(questoesNivelAtual.begin() + indiceDaPerguntaSorteada);
+        sorteiaQuestao();
+    }
 }
 
 void usarCartas(){
@@ -480,25 +479,25 @@ void usarPlacas(){
 
         cout << "........................................................................." << endl;
         if(letraRespostaCertaAtual.compare("A") == 0){
-            cout << " [A] " << a <<" placas   ";
-            cout << "[B] " << b <<" placas   ";
-            cout << "[C] " << c <<" placas   ";
-            cout << "[D] " << d <<" placas   " << endl << endl;
+            cout << " [A] " << a <<" placa(s)   ";
+            cout << "[B] " << b <<" placa(s)   ";
+            cout << "[C] " << c <<" placa(s)   ";
+            cout << "[D] " << d <<" placa(s)   " << endl << endl;
         }else if(letraRespostaCertaAtual.compare("B") == 0){
-            cout << " [A] " << b <<" placas   ";
-            cout << "[B] " << a <<" placas   ";
-            cout << "[C] " << c <<" placas   ";
-            cout << "[D] " << d <<" placas   " << endl << endl;
+            cout << " [A] " << b <<" placa(s)   ";
+            cout << "[B] " << a <<" placa(s)   ";
+            cout << "[C] " << c <<" placa(s)   ";
+            cout << "[D] " << d <<" placa(s)   " << endl << endl;
         }else if(letraRespostaCertaAtual.compare("C") == 0){
-            cout << " [A] " << c <<" placas   ";
-            cout << "[B] " << b <<" placas   ";
-            cout << "[C] " << a <<" placas   ";
-            cout << "[D] " << d <<" placas   " << endl << endl;
+            cout << " [A] " << c <<" placa(s)   ";
+            cout << "[B] " << b <<" placa(s)   ";
+            cout << "[C] " << a <<" placa(s)   ";
+            cout << "[D] " << d <<" placa(s)   " << endl << endl;
         } else {
-            cout << " [A] " << d <<" placas   ";
-            cout << "[B] " << b <<" placas   ";
-            cout << "[C] " << c <<" placas   ";
-            cout << "[D] " << a <<" placas   " << endl << endl;
+            cout << " [A] " << d <<" placa(s)   ";
+            cout << "[B] " << b <<" placa(s)   ";
+            cout << "[C] " << c <<" placa(s)   ";
+            cout << "[D] " << a <<" placa(s)   " << endl << endl;
         }
     }
 }
