@@ -104,6 +104,7 @@ void limparTela() {
 }
 
 void cabecalho(){
+
     cout << ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ." << endl;
     //cout << ". _____________________________________________________________________ ." << endl;
     cout << ". ______________________________ S H O W ______________________________ ." << endl;
@@ -185,7 +186,6 @@ int indiceRespostaCertaAtual(){
     }
 }
 
-
 /// sorteia uma pergunta aleatoria retornando o indice da pergunta
 void sorteiaQuestao(){
     indiceDaPerguntaSorteada = geraIndiceAleatorio(questoesNivelAtual.size());
@@ -196,16 +196,19 @@ void sorteiaQuestao(){
     usouUniversitarios = false;
 }
 
-
 void tabelaDePremios(){
     cout << " ACERTAR: R$ "<< premios.at(numeroDaRodadaAtual-1);
     if(numeroDaRodadaAtual == 1){
-        cout << "   PARAR: 0"; cout << "   ERRAR: 0" << endl <<endl;
+        cout << "   PARAR: 0";
+        cout << "   ERRAR: 0" << endl <<endl;
+    }else if(numeroDaRodadaAtual == premios.size()){
+        cout << "   PARAR: R$ " << premios.at(numeroDaRodadaAtual-2);
+        cout << "   ERRAR: PERDE TUDO" << endl <<endl;
     }else{
-        cout << "   PARAR: R$ " << premios.at(numeroDaRodadaAtual-2); cout << "   ERRAR: R$ " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
+        cout << "   PARAR: R$ " << premios.at(numeroDaRodadaAtual-2);
+        cout << "   ERRAR: R$ " << premios.at(numeroDaRodadaAtual-2) / 2 << endl <<endl;
     }
 }
-
 
 void questao(){
     if(numeroDaRodadaAtual == 1 && qtdPulos == 3 && !jaUsouAjuda){
@@ -303,10 +306,10 @@ bool alternativaCorreta(){
 }
 
 void imprimirResultado() {
+    int tamPremios = premios.size();
     if (alternativaCorreta()) {
         cout << "........................................................................." << endl;
         cout << " PARABENS! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1);
-        int tamPremios = premios.size();
         if(tamPremios == numeroDaRodadaAtual){ ///entao respondeu a ultima questao da rodada
             cout << " Milhao" << endl << endl;
             cout << " $$$ Agora voce eh o mais novo milionario do Brasil! $$$" << endl;
@@ -331,7 +334,11 @@ void imprimirResultado() {
         }
         cout << " A resposta certa era a alternativa: " << respostaCertaAtual << endl;
         if(numeroDaRodadaAtual != 1){
-            cout << " Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl;
+            if(tamPremios == numeroDaRodadaAtual){
+                cout << " Infelizmente voce perdeu tudo..." << endl;
+            }else{
+                cout << " Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl;
+            }
         }
         cout << "........................................................................." << endl;
         prosseguir();
@@ -546,7 +553,7 @@ void pararJogo(){
         cout << " Tudo bem, voce preferiu nao arriscar..." << endl << endl;
     }
     if(numeroDaRodadaAtual != 1){
-        cout << " Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl;
+        cout << " Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << " Mil" << endl;
     }
     cout << "........................................................................." << endl;
     prosseguir();
