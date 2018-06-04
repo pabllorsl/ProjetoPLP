@@ -41,6 +41,7 @@ int variavelAux;
 string cartaEscolhida;
 string respostaCertaAtual = "";
 bool jaUsouAjuda = false;
+int a; int b; int c; int d;
 
 ///Metodos
 void iniciarJogo();
@@ -86,8 +87,7 @@ void atualizarPremio();
 
 int main() {
     iniciarJogo();
-    do
-    {
+    do{
         imprimirQuestao();
         recebeRespostaDaQuestao();
 
@@ -105,19 +105,21 @@ void limparTela() {
 }
 
 void cabecalho(){
-    cout << "-------------------------------------------------------------------" << endl;
-    cout << "_____________________________ S H O W _____________________________" << endl;
-    cout << "_______________________________ D O _______________________________" << endl;
-    cout << "___________________________ M I L H A O ___________________________" << endl;
-    cout << "-------------------------------------------------------------------" << endl;
-    cout << "Teste seus conhecimentos e concorra ao premio maximo de R$ 1 milhao." << endl << endl;
+    cout << ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ." << endl;
+    //cout << ". _____________________________________________________________________ ." << endl;
+    cout << ". ______________________________ S H O W ______________________________ ." << endl;
+    cout << ". ________________________________ D O ________________________________ ." << endl;
+    cout << ". ____________________________ M I L H A O ____________________________ ." << endl;
+    cout << ". _____________________________________________________________________ ." << endl;
+    cout << ".  Teste seus conhecimentos e concorra ao premio maximo de R$ 1 milhao  ." << endl;
+    cout << ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ." << endl << endl;
 }
 
 void iniciarJogo() {
     preencherQuestoes(); /// tem que vir antes de escolherCategorias
     preencherPremios();
     cabecalho();
-    cout << "Diga-me o seu nome: ";
+    cout << " Diga-me o seu nome: ";
     cin >> nomeDoJogador;
     limparTela();
     escolherCategoria();
@@ -125,21 +127,21 @@ void iniciarJogo() {
 }
 
 void menuCategorias(){
-    cout << "Qual categoria de questoes voce deseja?" << endl;
-    cout << "1- Computacao" << endl;
-    cout << "2- Conhecimentos Gerais" << endl;
+    cout << " Qual categoria de questoes voce deseja?" << endl;
+    cout << " 1 - Computacao" << endl;
+    cout << " 2 - Conhecimentos Gerais" << endl;
 }
 
 void escolherCategoria(){
     cabecalho();
     menuCategorias();
-    cout << "\nDigite o numero da categoria: ";
+    cout << "\n Digite o numero da categoria: ";
     cin >> resposta;
     while((resposta.compare("1") != 0) && (resposta.compare("2") != 0)){
         limparTela();
         cabecalho();
         menuCategorias();
-        cout << "\nCategoria invalida. Digite 1 ou 2: ";
+        cout << "\n Categoria invalida. Digite 1 ou 2: ";
         cin >> resposta;
     }
 
@@ -185,41 +187,39 @@ void sorteiaQuestao(){
         letraRespostaCertaAtual = dificeisAux.at(indiceDaPerguntaSorteada).at(5);
         respostaCertaAtual = dificeisAux[indiceDaPerguntaSorteada][indiceRespostaCertaAtual()];
     }
-    //cout << "SORTEOU, e o INDICE FOI: " << indiceDaPerguntaSorteada <<endl; //apenas para testes
     usouCartas = false;
     usouPlacas = false;
     usouUniversitarios = false;
-    //usouPulo = false;
 }
 
 void questao(){
     if(numeroDaRodadaAtual == 1 && qtdPulos == 3 && !jaUsouAjuda){
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Bem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
+        cout << "........................................................................." << endl;
+        cout << " Bem vindo(a) " << nomeDoJogador << "! O jogo vai comecar, boa sorte!" << endl << endl;
     }
     if(jaUsouAjuda){
-        cout << "VOCE USOU UMA AJUDA, AGORA SO RESTA RESPONDER OU PARAR." << endl;
-        cout << "----------------------------------------------------------------" << endl << endl;
+        cout << " VOCE USOU UMA AJUDA, AGORA SO RESTA RESPONDER OU PARAR." << endl;
+        cout << "........................................................................." << endl << endl;
     }else{
-        cout << "Prepare-se para a pergunta que vale R$ " << premios.at(numeroDaRodadaAtual-1) << endl;
-        cout << "----------------------------------------------------------------" << endl << endl;
+        cout << " Prepare-se para a pergunta que vale R$ " << premios.at(numeroDaRodadaAtual-1) << endl;
+        cout << "........................................................................." << endl << endl;
     }
     tabelaDePremios();
 
     if(numeroDaRodadaAtual <= 2){
         for(int i = 0 ; i < 5 ; ++i)
-            cout << faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+            cout << " " <<faceisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){
         for(int i = 0 ; i < 5 ; ++i)
-            cout << mediasAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+            cout <<  " " <<mediasAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }else{
         for(int i = 0 ; i < 5 ; ++i)
-            cout << dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
+            cout <<  " " <<dificeisAux.at(indiceDaPerguntaSorteada).at(i) << endl;
     }
 }
 
 void tabelaDePremios(){
-    cout << "ACERTAR: R$ "<< premios.at(numeroDaRodadaAtual-1);
+    cout << " ACERTAR: R$ "<< premios.at(numeroDaRodadaAtual-1);
     if(numeroDaRodadaAtual == 1){
         cout << "   PARAR: 0"; cout << "   ERRAR: 0" << endl <<endl;
     }else{
@@ -229,11 +229,10 @@ void tabelaDePremios(){
 
 void removeAlternativasDasPlacas(vector<vector<string>> &vector){
     for(int i = 0 ; i < numeroDaCarta ; i++){
-        do
-        {
+        do{
             alternativaRemovida = geraIndiceAleatorio(4) + 1;
-        }while(alternativaRemovida == indiceRespostaCertaAtual() || vector[indiceDaPerguntaSorteada][alternativaRemovida].compare("- - - - -") == 0);
-        vector[indiceDaPerguntaSorteada][alternativaRemovida] = "- - - - -";
+        }while(alternativaRemovida == indiceRespostaCertaAtual() || vector[indiceDaPerguntaSorteada][alternativaRemovida].compare("---------") == 0);
+        vector[indiceDaPerguntaSorteada][alternativaRemovida] = "---------";
     }
 }
 
@@ -258,22 +257,21 @@ void imprimirQuestao() {
 void menuAjudas(){
     cout << "\n";
     if(usouCartas || usouPlacas || usouUniversitarios){
-        cout << "5- Parar" << endl << endl;
+        cout << " 5 - Parar" << endl << endl;
     }else{
-        cout << "1- Pular " << qtdPulos << "/3" << endl;
-        cout << "2- Cartas " << qtdCartas << "/1" << endl;
-        cout << "3- Placas " << qtdPlacas << "/1" << endl;
-        cout << "4- Universitarios " << qtdUniversitarios << "/1" << endl;
-        cout << "5- Parar " << endl << endl;
+        cout << " 1 - Pular " << qtdPulos << "/3" << endl;
+        cout << " 2 - Cartas " << qtdCartas << "/1" << endl;
+        cout << " 3 - Placas " << qtdPlacas << "/1" << endl;
+        cout << " 4 - Universitarios " << qtdUniversitarios << "/1" << endl;
+        cout << " 5 - Parar " << endl << endl;
     }
 }
 
 /// recebe a resposta da alternativa e verifica se a letra informada eh valida
 void recebeRespostaDaQuestao(){
     bool respostaInvalida;
-    cout << "Resposta: ";
-    do
-    {
+    cout << " Resposta: ";
+    do{
         cin >> resposta;
         if( (resposta.compare("a") == 0) || (resposta.compare("b") == 0) || (resposta.compare("c") == 0) || (resposta.compare("d") == 0) ){
             respostaInvalida = false;
@@ -287,34 +285,23 @@ void recebeRespostaDaQuestao(){
                 usarPlacas();
             else if(usouUniversitarios)
                 usarUniversitarios();
-            //cout << "----------------------------------------------------------------" << endl;
-           // cout << "VOCE JA USOU UMA AJUDA, AGORA SO RESTA RESPONDER OU PARAR." << endl << endl;
         }
         else if ( (resposta.compare("1") == 0) || (resposta.compare("2") == 0) || (resposta.compare("3") == 0) || (resposta.compare("4") == 0) || (resposta.compare("5") == 0) ) {
             respostaInvalida = false;
             int valor = atoi(resposta.c_str()); ///converter string para inteiro
-            switch(valor)
-            {
+            switch(valor){
                 case 1:
                     usarPulo();
                     break;
-
                 case 2:
                     usarCartas();
                     break;
-
                 case 3:
-                    cout << "----------------------------------------------------------------" << endl;
-                    cout << "Voce usou as placas... " << endl << endl;
                     usarPlacas();
                     break;
-
                 case 4:
-                    cout << "----------------------------------------------------------------" << endl;
-                    cout << "Voce usou os universitarios... " << endl << endl;
                     usarUniversitarios();
                     break;
-
                 case 5:
                     pararJogo();
                     break;
@@ -323,12 +310,11 @@ void recebeRespostaDaQuestao(){
             respostaInvalida = true;
             limparTela();
             if(numeroDaRodadaAtual != 1 || usouPulo){
-                cout << "----------------------------------------------------------------" << endl;
-                cout << "ESSA OPCAO NAO EXISTE... " << endl << endl;
+                cout << "........................................................................." << endl;
+                cout << " ESSA OPCAO NAO EXISTE... " << endl << endl;
             }
             imprimirQuestao();
-            cout << "Digite uma resposta valida: ";
-            //cout << "Resposta  invalida. Digite novamente: ";
+            cout << " Digite uma resposta valida: ";
         }
     }while(respostaInvalida);
 }
@@ -336,12 +322,8 @@ void recebeRespostaDaQuestao(){
 bool alternativaCorreta(){
     bool retorno;
     if(numeroDaRodadaAtual <= 2){ ///questoes faceis
-        //cout << "teste! QTD QUESTOES ANTES DE APAGAR: " << questoesFaceisCC.size() << endl;
-        //cout << "teste! QTD QUESTOESAUX ANTES DE APAGAR: " << faceisAux.size() << endl;
         retorno = faceisAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || faceisAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
-        faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada); ///agora apago essa questao pra ela nao se repetir em outras rodadas
-        //cout << "teste! QTD QUESTOES depois DE APAGAR: " << questoesFaceisCC.size() << endl;
-        //cout << "teste! QTD QUESTOESAUX depois DE APAGAR: " << faceisAux.size() << endl;
+        faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada); ///agora apago essa questao pra ela nao se repetir na rodada
 
     }else if(numeroDaRodadaAtual >= 3 && numeroDaRodadaAtual <= 4){ ///questoes medias
         retorno = mediasAux.at(indiceDaPerguntaSorteada).at(5).compare(resposta) == 0 || mediasAux.at(indiceDaPerguntaSorteada).at(6).compare(resposta) == 0;
@@ -356,11 +338,11 @@ bool alternativaCorreta(){
 
 void imprimirResultado() {
     if (alternativaCorreta()) {
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Parabens! voce ganhou R$ " << premios.at(numeroDaRodadaAtual-1) << endl << endl;
+        cout << "........................................................................." << endl;
+        cout << " PARABENS! voce ganhou o premio de R$ " << premios.at(numeroDaRodadaAtual-1) << " Milhao" << endl << endl;
         if(premios.size() == numeroDaRodadaAtual){ ///entao respondeu a ultima rodada
-            cout << "$$$ Agora voce eh o mais novo milionario do Brasil! $$$" << endl;
-            cout << "----------------------------------------------------------------" << endl << endl;
+            cout << " $$$ Agora voce eh o mais novo milionario do Brasil! $$$" << endl;
+            cout << "........................................................................." << endl;
                 prosseguir();
         }else{
             usouCartas = false;
@@ -372,22 +354,24 @@ void imprimirResultado() {
             sorteiaQuestao();
         }
     } else { ///errou a questao
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Que pena " << nomeDoJogador << ", voce errou..." << endl << endl;
-        cout << "A resposta certa era a alternativa: " << respostaCertaAtual << endl;
-        cout << "----------------------------------------------------------------" << endl;
-        if(numeroDaRodadaAtual != 1){
-            cout << "Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl << endl;
+        cout << "........................................................................." << endl;
+        cout << " Que pena " << nomeDoJogador << ", voce errou..." << endl;
+        if(numeroDaRodadaAtual == 1){
+            cout << endl;
         }
+        cout << " A resposta certa era a alternativa: " << respostaCertaAtual << endl;
+        if(numeroDaRodadaAtual != 1){
+            cout << " Voce leva pra casa R$ " << (premios.at(numeroDaRodadaAtual-2) /2 ) << endl;
+        }
+        cout << "........................................................................." << endl;
         prosseguir();
     }
 }
 
 void prosseguir(){
     bool respostaInvalida;
-    cout << "Deseja jogar outra partida? s/n ";
-		do
-        {
+    cout << "\n Deseja jogar outra partida? s/n ";
+		do{
 			cin >> resposta;
 			if(resposta.compare("n") == 0) {
 				continuar = false;
@@ -398,16 +382,16 @@ void prosseguir(){
 			}else {
 				respostaInvalida = true;
 				limparTela();
-				cout << "----------------------------------------------------------------" << endl << endl;
-                cout << "OPS... " << endl << endl;
-                cout << "----------------------------------------------------------------" << endl << endl << endl;
-				cout << "Deseja jogar outra partida? Digite s ou n ";
+				cout << "........................................................................." << endl << endl;
+                cout << " OPS... " << endl << endl;
+                cout << "........................................................................." << endl << endl;
+				cout << " Deseja jogar outra partida? Digite s ou n: ";
 			}
 		}while(respostaInvalida);
 
 		if (continuar) {
             numeroDaRodadaAtual = 1;
-			//preencherQuestoes();
+			//preencherQuestoes(); //nao precisa
 			qtdCartas = 1;
             qtdUniversitarios = 1;
             qtdPlacas = 1;
@@ -429,15 +413,15 @@ int geraIndiceAleatorio(int qtdDeIndices){
 }
 
 void usarPulo(){
-    if(!jaUsouAjuda){
+
         limparTela();
         if(qtdPulos == 0){
-            cout << "----------------------------------------------------------------" << endl;
-            cout << "VOCE NAO PODE MAIS PULAR, APENAS RESPONDER OU ESCOLHER UMA AJUDA. " << endl << endl;
+            cout << "........................................................................." << endl;
+            cout << " VOCE NAO PODE MAIS PULAR, APENAS RESPONDER OU ESCOLHER UMA AJUDA. " << endl << endl;
         }else{
             usouPulo = true;
-            cout << "----------------------------------------------------------------" << endl;
-            cout << "Voce pulou, ai vai a proxima pergunta... " << endl << endl;
+            cout << "........................................................................." << endl;
+            cout << " Voce pulou, ai vai a proxima pergunta... " << endl << endl;
             qtdPulos--;
             if(numeroDaRodadaAtual <= 2){ ///questoes faceis
                 faceisAux.erase(faceisAux.begin() + indiceDaPerguntaSorteada);
@@ -450,26 +434,31 @@ void usarPulo(){
             }
             sorteiaQuestao();
         }
-    }
+
 }
 
 void usarCartas(){
     limparTela();
     if(qtdCartas == 0 && !jaUsouAjuda){
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "VOCE NAO PODE MAIS USAR AS CARTAS, APENAS RESPONDER OU ESCOLHER OUTRA AJUDA. " << endl << endl;
+        cout << "........................................................................." << endl;
+        cout << " VOCE NAO PODE MAIS USAR AS CARTAS, APENAS RESPONDER OU ESCOLHER OUTRA AJUDA. " << endl << endl;
     }else{
         if(!usouCartas){
             qtdCartas--;
-            cout << "----------------------------------------------------------------" << endl;
-            cout << "Escolha a carta! Digite 1, 2 ou 3 " << endl;
-            cout << " ___    ___    ___" <<endl;
-            cout << "|###|  |###|  |###|" <<endl;
-            cout << "|###|  |###|  |###|" <<endl;
-            cout << "|###|  |###|  |###|" <<endl <<endl;
-            cout << "Carta: ";
-            usouCartas = true;
-            cin >> cartaEscolhida;
+            do{
+                limparTela();
+                cout << "........................................................................." << endl;
+                //cout << " Escolha a carta! Digite 1, 2 ou 3 " << endl;
+                cout << "  ___           ___           ___" << endl;
+                cout << " |###|         |###|         |###|" << endl;
+                cout << " |###|         |###|         |###|" << endl;
+                cout << " |###|         |###|         |###|" << endl << endl;
+                cout << "........................................................................." << endl << endl;
+                cout << " Escolha a carta! Digite 1, 2 ou 3: ";
+                usouCartas = true;
+                cin >> cartaEscolhida;
+
+            }while(cartaEscolhida != "1" && cartaEscolhida != "2" && cartaEscolhida != "3");
             numeroDaCarta = (geraIndiceAleatorio(2) + 1);
         }
         limparTela();
@@ -477,22 +466,22 @@ void usarCartas(){
        //     cout << "----------------------------------------------------------------" << endl;
         //    cout << "VOCE JA USOU UMA AJUDA, AGORA SO RESTA RESPONDER OU PARAR." << endl;
        // }
-        cout << "----------------------------------------------------------------" << endl;
+        cout << "........................................................................." << endl;
         if(cartaEscolhida.compare("1") == 0){
-            cout << " ___    ___    ___" <<endl;
-            cout << "|   |  |###|  |###|" <<endl;
-            cout << "| " << numeroDaCarta << " |  |###|  |###|" <<endl;
-            cout << "|___|  |###|  |###|" <<endl << endl;
+            cout << "  ___           ___           ___" << endl;
+            cout << " |" << numeroDaCarta << "  |         |###|         |###|" << endl;
+            cout << " |   |         |###|         |###|" << "        " << numeroDaCarta << " alternativa(s) eliminada(s)" <<endl;
+            cout << " |__" << numeroDaCarta << "|         |###|         |###|" <<endl << endl;
         }else if (cartaEscolhida.compare("2") == 0){
-            cout << " ___    ___    ___" <<endl;
-            cout << "|###|  |   |  |###|" <<endl;
-            cout << "|###|  | " << numeroDaCarta << " |  |###|" <<endl;
-            cout << "|###|  |___|  |###|" <<endl << endl;
+            cout << "  ___           ___           ___" << endl;
+            cout << " |###|         |" << numeroDaCarta << "  |         |###|" << endl;
+            cout << " |###|         |   |         |###|" << "        " << numeroDaCarta << " alternativa(s) eliminada(s)" << endl;
+            cout << " |###|         |__" << numeroDaCarta << "|         |###|" << endl << endl;
         }else if (cartaEscolhida.compare("3") == 0){
-            cout << " ___    ___    ___" <<endl;
-            cout << "|###|  |###|  |   |" <<endl;
-            cout << "|###|  |###|  | " << numeroDaCarta << " |" <<endl;
-            cout << "|###|  |###|  |___|" <<endl << endl;
+            cout << "  ___           ___           ___" << endl;
+            cout << " |###|         |###|         |" << numeroDaCarta << "  |" << endl;
+            cout << " |###|         |###|         |   |" "        " << numeroDaCarta << " alternativa(s) eliminada(s)" << endl;
+            cout << " |###|         |###|         |__" << numeroDaCarta << "|" << endl << endl;
         }
 
         if(!jaUsouAjuda && usouCartas){
@@ -503,14 +492,53 @@ void usarCartas(){
 }
 
 void usarPlacas(){
-    usouPlacas = true;
+    limparTela();
+    if(qtdPlacas == 0 && !jaUsouAjuda){
+        cout << "........................................................................." << endl;
+        cout << " VOCE NAO PODE MAIS USAR AS PLACAS, APENAS RESPONDER OU ESCOLHER OUTRA AJUDA. " << endl << endl;
+    }else{
+        if(!usouPlacas){
+            variavelAux = geraIndiceAleatorio(100);
+            usouPlacas = true;
+            jaUsouAjuda = true;
+            qtdPlacas--;
+            a = geraIndiceAleatorio(12);
+            b = geraIndiceAleatorio(12 - a);
+            c = geraIndiceAleatorio(12 - a - b);
+            d = 12 - a - b - c;
+        }
+        cout << "........................................................................." << endl;
+
+        if(letraRespostaCertaAtual.compare("A") == 0){
+            cout << " [A] " << a <<" placas   ";
+            cout << "[B] " << b <<" placas   ";
+            cout << "[C] " << c <<" placas   ";
+            cout << "[D] " << d <<" placas   " << endl << endl;
+        }else if(letraRespostaCertaAtual.compare("B") == 0){
+            cout << " [A] " << b <<" placas   ";
+            cout << "[B] " << a <<" placas   ";
+            cout << "[C] " << c <<" placas   ";
+            cout << "[D] " << d <<" placas   " << endl << endl;
+        }else if(letraRespostaCertaAtual.compare("C") == 0){
+            cout << " [A] " << c <<" placas   ";
+            cout << "[B] " << b <<" placas   ";
+            cout << "[C] " << a <<" placas   ";
+            cout << "[D] " << d <<" placas   " << endl << endl;
+        } else {
+            cout << " [A] " << d <<" placas   ";
+            cout << "[B] " << b <<" placas   ";
+            cout << "[C] " << c <<" placas   ";
+            cout << "[D] " << a <<" placas   " << endl << endl;
+        }
+
+    }
 }
 
 void usarUniversitarios(){
     limparTela();
     if(qtdUniversitarios == 0 && !jaUsouAjuda){
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "VOCE NAO PODE MAIS USAR OS UNIVERSITARIOS, APENAS RESPONDER OU ESCOLHER OUTRA AJUDA. " << endl << endl;
+        cout << "........................................................................." << endl;
+        cout << " VOCE NAO PODE MAIS USAR OS UNIVERSITARIOS, APENAS RESPONDER OU ESCOLHER OUTRA AJUDA. " << endl << endl;
     }else{
         if(!usouUniversitarios){
             variavelAux = geraIndiceAleatorio(100);
@@ -518,27 +546,27 @@ void usarUniversitarios(){
             jaUsouAjuda = true;
             qtdUniversitarios--;
         }
-        cout << "----------------------------------------------------------------" << endl;
-        cout << "Estas sao as respostas dos 3 universitarios: ";
+        cout << "........................................................................." << endl;
+        cout << " Estas sao as respostas dos 3 universitarios: ";
         if(variavelAux == 0 || variavelAux == 10 || variavelAux == 20){
             if(variavelAux == 0){
-                cout << "[" << letraRespostaCertaAtual << "]   " << "[A]   "<< "[A]" << endl << endl;
+                cout << " [" << letraRespostaCertaAtual << "]   " << "[A]   "<< "[A]" << endl << endl;
             }else if(variavelAux == 10){
-                cout << "[B]   " << "[" << letraRespostaCertaAtual << "]   "<< "[B]" << endl << endl;
+                cout << " [B]   " << "[" << letraRespostaCertaAtual << "]   "<< "[B]" << endl << endl;
             }else{
-                cout << "[C]   " << "[C]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
+                cout << " [C]   " << "[C]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
             }
         }else if(variavelAux % 2 == 0){ ///eh par
             if(variavelAux > 10){
-                cout << "[" << letraRespostaCertaAtual << "]   " << "[" << letraRespostaCertaAtual << "]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
+                cout << " [" << letraRespostaCertaAtual << "]   " << "[" << letraRespostaCertaAtual << "]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
             }else{
-                cout << "[" << letraRespostaCertaAtual << "]   " << "[B]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
+                cout << " [" << letraRespostaCertaAtual << "]   " << "[B]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
             }
         }else{ ///eh impar
             if(variavelAux > 10){
-                cout << "[" << letraRespostaCertaAtual << "]   " << "[" << letraRespostaCertaAtual << "]   "<< "[C]" << endl << endl;
+                cout << " [" << letraRespostaCertaAtual << "]   " << "[" << letraRespostaCertaAtual << "]   "<< "[C]" << endl << endl;
             }else{
-                cout << "[A]   " << "[" << letraRespostaCertaAtual << "]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
+                cout << " [A]   " << "[" << letraRespostaCertaAtual << "]   "<< "[" << letraRespostaCertaAtual << "]" << endl << endl;
             }
         }
 
@@ -547,16 +575,19 @@ void usarUniversitarios(){
 
 void pararJogo(){
     limparTela();
-    cout << "----------------------------------------------------------------" << endl << endl;
+    cout << "........................................................................." << endl;
+    if(numeroDaRodadaAtual == 1){
+        cout << endl;
+    }
     if(numeroDaRodadaAtual <= 3){
-        cout << "Mas ja? Tudo bem..." << endl << endl;
+        cout << " Mas ja? Tudo bem..." << endl << endl;
     }else{
-        cout << "Tudo bem, voce preferiu nao arriscar..." << endl << endl;
+        cout << " Tudo bem, voce preferiu nao arriscar..." << endl << endl;
     }
-    cout << "----------------------------------------------------------------" << endl;
     if(numeroDaRodadaAtual != 1){
-        cout << "Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl << endl;
+        cout << " Voce leva pra casa R$ " << premios.at(numeroDaRodadaAtual-2) << endl;
     }
+    cout << "........................................................................." << endl;
     prosseguir();
 }
 
@@ -570,15 +601,6 @@ void preencherPremios() {
 }
 
 void preencherQuestoes() {
-    /// eh preciso limpar pra garantir que vao estar zerados antes de preenche-los.
-    /// pois no final de cada rodada sobram elementos(questoes) dentro da lista
-    //questoesFaceisCC.clear();
-    //questoesMediasCC.clear();
-    //questoesDificeisCC.clear();
-    //questoesFaceisGeral.clear();
-    //questoesMediasGeral.clear();
-    //questoesDificeisGeral.clear();
-
     /// vetor auxiliar que sera adicionado ao vetores principais
     /// depois da insercao esse vetor eh zerado e novas questoes sao atribuidas a ele
     vector<string> vetorAux;
@@ -618,6 +640,39 @@ void preencherQuestoes() {
     questoesFaceisGeral.push_back(vetorAux);
     vetorAux.clear();
 
+    ///4
+    vetorAux.push_back("O que recebe uma pessoa que esta sendo doutrinada?");
+    vetorAux.push_back("A) Repressao");
+    vetorAux.push_back("B) Divertimento");
+    vetorAux.push_back("C) Ensinamentos");
+    vetorAux.push_back("D) Medicamentos");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesFaceisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///5
+    vetorAux.push_back("Qual o nome da boneca que fala do Sitio do Pica Pau Amarelo?");
+    vetorAux.push_back("A) Narizinho");
+    vetorAux.push_back("B) Baby Alive");
+    vetorAux.push_back("C) Annabelle");
+    vetorAux.push_back("D) Emilia");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesFaceisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///6
+    vetorAux.push_back("Os fantoches sao controlados por quais membros?");
+    vetorAux.push_back("A) Maos");
+    vetorAux.push_back("B) Pes");
+    vetorAux.push_back("C) Bocas");
+    vetorAux.push_back("D) Olhos");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesFaceisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
     ///medias
     ///1
     vetorAux.push_back("A frase 'I have a dream' eh associada a: ");
@@ -647,6 +702,39 @@ void preencherQuestoes() {
     vetorAux.push_back("B) Filosofia");
     vetorAux.push_back("C) Matematica");
     vetorAux.push_back("D) Astronomia");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesMediasGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///4
+    vetorAux.push_back("Como de chama a navegacao mercante entre portos de um mesmo pais?");
+    vetorAux.push_back("A) Cabortice");
+    vetorAux.push_back("B) Cabanagem");
+    vetorAux.push_back("C) Cabotino");
+    vetorAux.push_back("D) Cabotagem");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesMediasGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///5
+    vetorAux.push_back("O que sao Pantalonas?");
+    vetorAux.push_back("A) Calcas");
+    vetorAux.push_back("B) Blusas");
+    vetorAux.push_back("C) Casacos");
+    vetorAux.push_back("D) Sapatos");
+    vetorAux.push_back("A");
+    vetorAux.push_back("a");
+    questoesMediasGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///6
+    vetorAux.push_back("Onde esta localizada a regiao da Toscana?");
+    vetorAux.push_back("A) Italia");
+    vetorAux.push_back("B) Espanha");
+    vetorAux.push_back("C) Alemanha");
+    vetorAux.push_back("D) Escocia");
     vetorAux.push_back("A");
     vetorAux.push_back("a");
     questoesMediasGeral.push_back(vetorAux);
@@ -686,6 +774,39 @@ void preencherQuestoes() {
     questoesDificeisGeral.push_back(vetorAux);
     vetorAux.clear();
 
+    ///4
+    vetorAux.push_back("A mulher casada com o filho do meu avo que nao eh meu pai eh:");
+    vetorAux.push_back("A) Minha prima");
+    vetorAux.push_back("B) Minha cunhada");
+    vetorAux.push_back("C) Minha tia");
+    vetorAux.push_back("D) Minha mae");
+    vetorAux.push_back("C");
+    vetorAux.push_back("c");
+    questoesDificeisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///5
+    vetorAux.push_back("Qual era a capital do Brasil antes de Brasilia?");
+    vetorAux.push_back("A) Sao Paulo");
+    vetorAux.push_back("B) Belo Horizonte");
+    vetorAux.push_back("C) Minas Gerais");
+    vetorAux.push_back("D) Rio de Janeiro");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesDificeisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
+    ///6
+    vetorAux.push_back("Qual a primeira equipe que Ayrton Senna correu na formula 1?");
+    vetorAux.push_back("A) Lotus");
+    vetorAux.push_back("B) McLaren");
+    vetorAux.push_back("C) Williams");
+    vetorAux.push_back("D) Toleman");
+    vetorAux.push_back("D");
+    vetorAux.push_back("d");
+    questoesDificeisGeral.push_back(vetorAux);
+    vetorAux.clear();
+
     ///-----------------------COMPUTACAO----------------------------
     ///faceis
     ///1
@@ -711,7 +832,7 @@ void preencherQuestoes() {
     vetorAux.clear();
 
     ///3
-    vetorAux.push_back("Eh o principal modulo do computador, onde estao conectados todos os perifericos");
+    vetorAux.push_back("Principal modulo de um computador, onde estao conectados todos os perifericos");
     vetorAux.push_back("A) CPU");
     vetorAux.push_back("B) Placa mae");
     vetorAux.push_back("C) Gabinete");
