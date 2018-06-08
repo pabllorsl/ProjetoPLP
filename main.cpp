@@ -1,11 +1,11 @@
 #include <algorithm>
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <thread>
 #include <vector>
-#include <stdlib.h>
-#include <windows.h>
 
 using namespace std;
 
@@ -246,7 +246,7 @@ void recebeRespostaDaQuestao() {
         if(nomeDoJogador.compare("bot") == 0) {
             resposta = letraAleatoria(alternativas);
         } else if(nomeDoJogador.compare("god") == 0) {
-            Sleep(1300);
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
             resposta = questoesNivelAtual.at(indiceDaPerguntaSorteada).at(6);
         } else {
             cin >> resposta;
